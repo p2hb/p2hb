@@ -1,3 +1,5 @@
 # P2HB
 
-# Warning: I threw together this code on a whim so it is currently not very easy to read. Currently working on refactoring the code. 
+### Warning: The code is not very well written at the moment. I am currently working on fixing and refactoring the code. 
+
+Assets and pokemon data are taken from https://github.com/poketwo/poketwo
