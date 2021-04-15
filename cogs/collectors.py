@@ -17,7 +17,6 @@ class SpeciesConverter(commands.Converter):
             raise commands.BadArgument(f"Could not find a pokémon matching `{arg}`.")
         return species
 
-
 class Collectors(commands.Cog):
     """For collectors."""
 
