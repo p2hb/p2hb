@@ -1,6 +1,6 @@
 # P2HB
 
-### Warning: The code is not very well written at the moment. I am currently working on fixing and refactoring the code. 
+### Warning: Code is bad.
 
 
 Parts of the code are taken from https://github.com/poketwo/helper-bot (the official server helper bot)   
