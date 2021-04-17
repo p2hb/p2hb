@@ -169,7 +169,7 @@ class Collectors(commands.Cog):
         pages = menus.MenuPages(
             source=AsyncListPageSource(
                 users,
-                title=f"{species} Collectors",
+                title=f"All {species} Collectors using the bot",
                 format_item=lambda x: f"<@{x['_id']}>",
             )
         )
@@ -203,7 +203,7 @@ class Collectors(commands.Cog):
 
         await ctx.invoke(self.search, species=species)
     
-    @commands.command(aliases = ["colbs", "cbs"])
+    @commands.command(aliases = ["colgs", "cgs"])
     async def collectglobalsearch(self, ctx, *, species: SpeciesConverter):
         """An alias for the collect serversearch command."""
 
