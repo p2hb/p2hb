@@ -20,7 +20,8 @@ COGS = [
     "reputation",
     "minigame",
     "pokedex",
-    "duel"
+    "duel",
+    "event"
 ]
 
 
