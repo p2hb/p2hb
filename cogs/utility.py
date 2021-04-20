@@ -11,6 +11,8 @@ class Utility(commands.Cog):
     
     @commands.command(aliases=("sr",))
     async def shinyrate(self, ctx, streak=1):
+        """Check the shinyrate for a specific shiny hunt streak"""
+
         embed = discord.Embed(title = f"Shiny Rate for {streak} shiny hunt streak")
         embed.add_field(
             name = "Without shiny charm", 
@@ -26,6 +28,8 @@ class Utility(commands.Cog):
     
     @commands.command()
     async def invite(self, ctx):
+        """Invite this bot into your server"""
+
         embed = discord.Embed(title = f"Want to add me to your server or withdraw tokens? Use the link below!")
         embed.add_field(
             name = "Join Server", 

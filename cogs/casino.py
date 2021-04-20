@@ -260,27 +260,19 @@ class Casino(commands.Cog):
             message = await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
             await asyncio.sleep(0.2)
 
-            # results1 = random.choices(slots, weights=(30, 5, 5, 20, 5), k=1)[0]
-            # results2 = random.choices(slots, weights=(3, 40, 40, 40, 100), k=1)[0]
-            # results3 = random.choices(slots, weights=(30, 30, 30, 40, 100), k=1)[0]
-            # if random.randint(1, 100) > 20:
-            #     results1 = results2
+            results = random.choices(slots, k=3)
 
-            results1 = random.choice(slots)
-            results2 = random.choice(slots)
-            results3 = random.choice(slots)
-
-            if results1 == results2 and results2 == results3:
+            if results[0] == results[1] and results[1] == results[2]:
                 winnings = amount
-                if results1 == "🥧":
+                if results[0] == "🥧":
                     winnings = 20 * amount
                     embed.description = f"**JACKPOT!** You won **{winnings:,} tokens!**"
-                elif results1 == "🍒":
+                elif results[0] == "🍒":
                     winnings = 4 * amount
                     embed.description = (
                         f"**TRIPLE CHERRY!** You won **{winnings:,} tokens!**"
                     )
-                elif results1 == "🍇":
+                elif results[0] == "🍇":
                     winnings = 2 * amount
                     embed.description = (
                         f"**TRIPLE GRAPE!** You won **{winnings:,} tokens!**"
@@ -290,7 +282,7 @@ class Casino(commands.Cog):
                         f"You won **{winnings:,} tokens**! (Your money back)"
                     )
             else:
-                if "🍒" in results1 + results2 + results3:
+                if "🍒" in results:
                     winnings = amount // 2
                     embed.description = (
                         f"You won ** {winnings:,} tokens**! (Half your money back)"
@@ -303,7 +295,7 @@ class Casino(commands.Cog):
             )
             embed.description += "\n \n" + " | ".join(random.choices(slots, k=3))
             embed.description += (
-                "\n " + " | ".join((results1, results2, results3)) + " ⬅️"
+                "\n " + " | ".join(results) + " ⬅️"
             )
             embed.description += "\n " + " | ".join(random.choices(slots, k=3))
 

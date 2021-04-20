@@ -14,8 +14,8 @@ class Reputation(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def vouch(self, ctx, user: discord.User):
-        # true = vouch
-        # false = report 
+        """Vouch for a user"""
+
         result = await self.bot.mongo.db.vouch.update_one(
             {"_id": ctx.author.id},
             {"$set": {str(user.id): True}},
@@ -26,8 +26,8 @@ class Reputation(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def unvouch(self, ctx, user: discord.User):
-        # true = vouch
-        # false = report 
+        """Remove your vouch for a user"""
+
         result = await self.bot.mongo.db.vouch.update_one(
             {"_id": ctx.author.id},
             {"$unset": {str(user.id): True}},
@@ -38,8 +38,8 @@ class Reputation(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def report(self, ctx, user: discord.User):
-        # true = vouch
-        # false = report 
+        """Report a user"""
+
         result = await self.bot.mongo.db.vouch.update_one(
             {"_id": ctx.author.id},
             {"$set": {str(user.id): False}},
@@ -50,8 +50,8 @@ class Reputation(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def unreport(self, ctx, user: discord.User):
-        # true = vouch
-        # false = report 
+        """Remove your report for a user"""
+
         result = await self.bot.mongo.db.vouch.update_one(
             {"_id": ctx.author.id},
             {"$unset": {str(user.id): False}},
@@ -67,6 +67,8 @@ class Reputation(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def vouches(self, ctx, *, member: discord.Member = None):
+        """Check a users vouches"""
+
         if member is None:
             member = ctx.author
 
@@ -87,6 +89,8 @@ class Reputation(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def reports(self, ctx, *, member: discord.Member = None):
+        """Check a users reports vouches"""
+
         if member is None:
             member = ctx.author
 

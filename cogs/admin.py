@@ -102,10 +102,27 @@ class Admin(commands.Cog):
             {"$inc": {"balance": amount}},
         )
         return await ctx.send(f"Gave everyone {amount} tokens!")
+
+    @commands.is_owner()
+    @commands.command(aliases = ["ae"])
+    async def reset_bonus(self, ctx):
+        await self.bot.mongo.db.member.update_many(
+            {},
+            {"$set": {"has_collected": False}},
+        )
+        return await ctx.send(f"Reset eveyone's event collect!")
     
     @commands.is_owner()
     @commands.command(aliases = ["abb"])
     async def addbankerbal(self, ctx, user: FetchUserConverter, amount = 0):
+        await self.bot.mongo.update_member(user, {"$inc": {"banker_balance": amount}})
+        return await ctx.send(f"Gave **{user}** {amount} banker tokens.")
+    
+    @commands.is_owner()
+    @commands.command(aliases = ["rbb"])
+    async def resetbankerbalance(self, ctx, user: FetchUserConverter):
+        member = await self.bot.mongo.fetch_member_info(ctx.author)
+        amount = member.banker_balance*-1
         await self.bot.mongo.update_member(user, {"$inc": {"banker_balance": amount}})
         return await ctx.send(f"Gave **{user}** {amount} banker tokens.")
     

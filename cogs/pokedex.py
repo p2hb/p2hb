@@ -9,7 +9,8 @@ class Pokedex(commands.Cog):
 
     @commands.command()
     async def dex(self, ctx, species):
-        """Show dex dex"""
+        """Show Pokédex info"""
+        
         shiny = False
 
         if species.isdigit():
