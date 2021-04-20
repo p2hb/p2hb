@@ -28,7 +28,7 @@ class Event(commands.Cog):
         await self.bot.mongo.update_member(ctx.author, {"$inc": {"balance": 420}, "$set": {"has_collected": True}})
         embed = discord.Embed(title = "Happy April 20th!", description="You have been given 420 tokens.")
         
-        await ctx.send(f"><@!{ctx.author.id}>", embed=embed)
+        await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
 
 def setup(bot):
     bot.add_cog(Event(bot))
