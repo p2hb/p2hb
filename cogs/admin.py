@@ -104,7 +104,7 @@ class Admin(commands.Cog):
         return await ctx.send(f"Gave everyone {amount} tokens!")
 
     @commands.is_owner()
-    @commands.command(aliases = ["ae"])
+    @commands.command(aliases = [])
     async def reset_bonus(self, ctx):
         await self.bot.mongo.db.member.update_many(
             {},
