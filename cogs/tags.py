@@ -205,7 +205,7 @@ class Tags(commands.Cog):
         await self.bot.mongo.db.tag.delete_many({"original": tag.name})
         await ctx.send(f"Tag and corresponding aliases successfully deleted.")
 
-    @commands.has_permissions(administrator=True)
+    @commands.is_owner()
     @tag.command()
     async def forcedelete(self, ctx, *, name):
         """Removes a tag by force."""
@@ -218,7 +218,7 @@ class Tags(commands.Cog):
         await self.bot.mongo.db.tag.delete_many({"original": tag.name})
         await ctx.send(f"Tag and corresponding aliases successfully force deleted.")
 
-    @commands.has_permissions(administrator=True)
+    @commands.is_owner()
     @tag.command()
     async def forceedit(self, ctx, name, *, content):
         """Edits a tag by force."""
