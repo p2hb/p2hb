@@ -20,13 +20,13 @@ class Event(commands.Cog):
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.command()
     async def eventcollect(self, ctx):
-        """4/20 Event"""
+        """Bot Verification Event"""
         member = await self.bot.mongo.fetch_member_info(ctx.author)
         if member.has_collected:
             return await ctx.send("You've already collected the bonus!")
         
-        await self.bot.mongo.update_member(ctx.author, {"$inc": {"balance": 420}, "$set": {"has_collected": True}})
-        embed = discord.Embed(title = "Happy April 20th!", description="You have been given 420 tokens.")
+        await self.bot.mongo.update_member(ctx.author, {"$inc": {"balance": 500}, "$set": {"has_collected": True}})
+        embed = discord.Embed(title = "Here, have some free money", description="You have been given 500 tokens. If you would like to add the bot to your own server, use https://invite.p2hb.me/")
         
         await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
 

@@ -21,6 +21,7 @@ COGS = [
     "minigame",
     "pokedex",
     "duel",
+    "event"
 ]
 
 
