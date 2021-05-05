@@ -89,6 +89,10 @@ class Admin(commands.Cog):
     @commands.command(aliases = ["sb"])
     async def showbal(self, ctx, user: FetchUserConverter):
         u = await self.bot.mongo.fetch_member_info(user)
+        if u is None:
+            return await ctx.send(f"**{user.name}** needs to run `>start`")
+        elif u.suspended:
+            return await ctx.send(f"**{user.name}** is suspended")
 
         embed = discord.Embed(title=f"{user.display_name}'s balance")
         embed.add_field(name="Tokens", value=f"{u.balance:,}")
