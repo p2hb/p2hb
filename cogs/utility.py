@@ -43,5 +43,22 @@ class Utility(commands.Cog):
         )
         await ctx.send(embed = embed)
     
+    @commands.command()
+    async def vote(self, ctx):
+        """Vote for the server and bot"""
+
+        embed = discord.Embed(title = f"Vote for the bot or server below")
+        embed.add_field(
+            name = "Vote for the bot", 
+            value = f"[Top.gg bot voting](https://top.gg/bot/818706022675120138/vote)", 
+            inline = False
+        )
+        embed.add_field(
+            name = "Vote for the server", 
+            value = f"[Top.gg server voting](https://top.gg/servers/818698098103681085/vote)",
+            inline = False
+        )
+        await ctx.send(embed = embed)
+    
 def setup(bot):
     bot.add_cog(Utility(bot))
