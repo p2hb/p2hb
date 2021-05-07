@@ -3,7 +3,9 @@ import traceback
 
 import discord
 from discord.ext import commands, tasks
+import dbl
 
+import config
 
 class Bot(commands.Cog):
     """For basic bot operation."""
@@ -11,6 +13,9 @@ class Bot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.update_status.start()
+
+        self.dblpy = dbl.DBLClient(self.bot, config.DBL_TOKEN)
+        self.update_stats.start()
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -79,6 +84,34 @@ class Bot(commands.Cog):
                 name=f">help | {total_members:,} users",
             )
         )
+    
+    @tasks.loop(minutes=30)
+    async def update_stats(self):
+        await self.bot.wait_until_ready()
+
+        total_members = 0
+        for guild in self.bot.guilds:
+            total_members += guild.member_count
+
+        await self.bot.change_presence(
+            activity=discord.Activity(
+                type=discord.ActivityType.watching,
+                name=f">help | {total_members:,} users",
+            )
+        )
+    
+    @tasks.loop(minutes=30)
+    async def update_stats(self):
+        """This function runs every 30 minutes to automatically update your server count."""
+        await self.bot.wait_until_ready()
+        c = self.bot.get_channel(840273328136650803)
+
+        try:
+            server_count = len(self.bot.guilds)
+            await self.dblpy.post_guild_count(server_count)
+            await c.send('Posted server count ({})'.format(server_count))
+        except Exception as e:
+            await c.send('Failed to post server count\n{}: {}'.format(type(e).__name__, e))
 
 
 def setup(bot):
