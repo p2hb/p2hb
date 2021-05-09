@@ -692,6 +692,19 @@ class DataManagerBase:
         except KeyError:
             return None
 
+    def closest_species_by_name(self, name: str) -> [Species]:
+        potential_names = []
+        for poke in self.pokemon.values():
+            for guess in poke.correct_guesses:
+                cleaned_up_name = (deaccent(name.lower().replace("′", "'")))
+                if guess in cleaned_up_name or cleaned_up_name in guess:
+                    if (len(potential_names) > 5):
+                        return potential_names
+                    potential_names.append(guess)
+                    break
+
+        return potential_names
+        
     def species_by_name(self, name: str) -> Species:
         try:
             return next(

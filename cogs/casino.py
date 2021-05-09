@@ -35,7 +35,7 @@ class Casino(commands.Cog):
     async def balance(self, ctx):
         member = await self.bot.mongo.fetch_member_info(ctx.author)
         amount = member.balance
-        embed = discord.Embed(title=f"{ctx.author.display_name}'s balance")
+        embed = discord.Embed(title=f"{ctx.author.display_name}'s balance", color=0xEB4634)
         embed.add_field(name="Tokens", value=f"{amount:,}")
 
         return await ctx.send(embed=embed)
@@ -65,6 +65,7 @@ class Casino(commands.Cog):
         embed = discord.Embed(
             title=f"Transaction Complete!",
             description=f"**{ctx.author.display_name}** gave **{user.display_name}** **{amount}** tokens!",
+            color=0xEB4634
         )
 
         return await ctx.send(f"> <@!{user.id}>", embed=embed)
@@ -74,7 +75,7 @@ class Casino(commands.Cog):
     async def banker_balance(self, ctx):
         member = await self.bot.mongo.fetch_member_info(ctx.author)
         amount = member.banker_balance
-        embed = discord.Embed(title=f"{ctx.author.display_name}'s Banker Balance")
+        embed = discord.Embed(title=f"{ctx.author.display_name}'s Banker Balance", color=0xEB4634)
         embed.add_field(name="Tokens", value=f"{amount:,}")
 
         return await ctx.send(embed=embed)
@@ -102,7 +103,7 @@ class Casino(commands.Cog):
                     break
 
             embed = discord.Embed(
-                title=f"Flipping Romo — 10 tokens", description=flip_dialogue
+                title=f"Flipping Romo — 10 tokens", description=flip_dialogue, color=0xEB4634
             )
 
             if health <= 0:
@@ -121,6 +122,7 @@ class Casino(commands.Cog):
             embed = discord.Embed(
                 title=f"Romo Flip",
                 description="You pay 10 tokens to flip Romo 10 times. He starts with 100 health and each time you flip him, he loses 5-14 health. If he dies, you will receive 20 tokens. Do `>romoflip start` to play!",
+                color=0xEB4634
             )
             return await ctx.send(embed=embed)
 
@@ -146,7 +148,7 @@ class Casino(commands.Cog):
             else:
                 dice_roll = random.randint(1, 3)
 
-            embed = discord.Embed(title=f"Dice Roll — {amount}")
+            embed = discord.Embed(title=f"Dice Roll — {amount}", color=0xEB4634)
             embed.add_field(name="Roll", value=f"You rolled a **{dice_roll}**.")
             if dice_roll >= 4:
                 await self.bot.mongo.update_member(
@@ -169,6 +171,7 @@ class Casino(commands.Cog):
             embed = discord.Embed(
                 title=f"Dice Roll",
                 description="You roll a 6 sided dice. If the dice is at least 4, you win 2x the amount you entered with. Do `>diceroll start <amount>` to play!",
+                color=0xEB4634
             )
             return await ctx.send(embed=embed)
 
@@ -203,7 +206,7 @@ class Casino(commands.Cog):
             else:
                 flip = "tails" if choice == "heads" else "heads"
 
-            embed = discord.Embed(title=f"Coinflip — {amount}")
+            embed = discord.Embed(title=f"Coinflip — {amount}", color=0xEB4634)
             embed.add_field(
                 name="Win Condition", value=f"{choice.capitalize()}", inline=False
             )
@@ -231,6 +234,7 @@ class Casino(commands.Cog):
             embed = discord.Embed(
                 title=f"Coin Flip",
                 description="You flip a coin, if the coin lands on heads, you win 2x the amount you entered with. Do `>coinflip start <amount>` to play!",
+                color=0xEB4634
             )
             return await ctx.send(embed=embed)
             
@@ -256,6 +260,7 @@ class Casino(commands.Cog):
             embed = discord.Embed(
                 title=f"Slots — {amount:,}",
                 description="❓ | ❓ | ❓ \n ❓ | ❓ | ❓ ⬅️ \n ❓ | ❓ | ❓ ",
+                color=0xEB4634
             )
             message = await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
             await asyncio.sleep(0.2)

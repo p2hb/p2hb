@@ -13,7 +13,7 @@ class Utility(commands.Cog):
     async def shinyrate(self, ctx, streak=1):
         """Check the shinyrate for a specific shiny hunt streak"""
 
-        embed = discord.Embed(title = f"Shiny Rate for {streak} shiny hunt streak")
+        embed = discord.Embed(color=0xEB4634, title = f"Shiny Rate for {streak} shiny hunt streak")
         embed.add_field(
             name = "Without shiny charm", 
             value = f"1 in {4096/(1+math.log(1+streak/30)): .3f}", 
@@ -30,7 +30,7 @@ class Utility(commands.Cog):
     async def invite(self, ctx):
         """Invite this bot into your server"""
 
-        embed = discord.Embed(title = f"Want to add me to your server or withdraw tokens? Use the link below!")
+        embed = discord.Embed(color=0xEB4634, title = f"Want to add me to your server or withdraw tokens? Use the link below!")
         embed.add_field(
             name = "Join Server", 
             value = f"http://join.p2hb.me/", 
@@ -47,7 +47,7 @@ class Utility(commands.Cog):
     async def vote(self, ctx):
         """Vote for the server and bot"""
 
-        embed = discord.Embed(title = f"Vote for the bot or server below")
+        embed = discord.Embed(color=0xEB4634, title = f"Vote for the bot or server below")
         embed.add_field(
             name = "Vote for the bot", 
             value = f"[Top.gg bot voting](https://top.gg/bot/818706022675120138/vote)", 
@@ -64,7 +64,7 @@ class Utility(commands.Cog):
     async def stats(self, ctx):
         """Stats"""
 
-        embed = discord.Embed(title = f"P2HB Statistics")
+        embed = discord.Embed(color=0xEB4634, title = f"P2HB Statistics")
         embed.add_field(
             name = "Total servers", 
             value = f"{len(self.bot.guilds)}", 

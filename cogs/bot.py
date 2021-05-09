@@ -25,6 +25,7 @@ class Bot(commands.Cog):
             em = discord.Embed(
                 title=f"Slow it down!",
                 description=f"Try again in {error.retry_after:.2f}s.",
+                color=0xEB4634
             )
             await ctx.send(embed=em)
         elif isinstance(error, commands.DisabledCommand):

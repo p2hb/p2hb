@@ -83,7 +83,7 @@ class Admin(commands.Cog):
         elif u.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
 
-        embed = discord.Embed(title=f"{user.display_name}'s balance")
+        embed = discord.Embed(title=f"{user.display_name}'s balance", color=0xEB4634)
         embed.add_field(name="Tokens", value=f"{u.balance:,}")
         return await ctx.send(embed=embed)
 

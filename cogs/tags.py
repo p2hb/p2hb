@@ -102,7 +102,7 @@ class Tags(commands.Cog):
         if user is None:
             user = FakeUser(tag.owner_id)
 
-        embed = discord.Embed(color=discord.Color.blurple(), title=tag.name)
+        embed = discord.Embed(color=0xEB4634, title=tag.name)
         embed.add_field(name="Owner", value=user.mention)
         if tag.alias:
             embed.add_field(name="Original", value=tag.original)

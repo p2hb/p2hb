@@ -16,7 +16,7 @@ class CustomHelpCommand(commands.HelpCommand):
             await ctx.send(str(error.original))
 
     def make_page_embed(self, commands, title="Help", description=discord.Embed.Empty):
-        embed = discord.Embed(color=discord.Color.blurple())
+        embed = discord.Embed(color=0xEB4634)
         embed.title = title
         embed.description = description
         embed.set_footer(
@@ -40,7 +40,7 @@ class CustomHelpCommand(commands.HelpCommand):
     def make_default_embed(
         self, cogs, title="Command Categories", description=discord.Embed.Empty
     ):
-        embed = discord.Embed(color=discord.Color.blurple())
+        embed = discord.Embed(color=0xEB4634)
         embed.title = title
         embed.description = description
 
@@ -135,7 +135,7 @@ class CustomHelpCommand(commands.HelpCommand):
         await ctx.send(embed=embed)
 
     async def send_command_help(self, command):
-        embed = discord.Embed(color=discord.Color.blurple())
+        embed = discord.Embed(color=0xEB4634)
         embed.title = self.clean_prefix + command.qualified_name
 
         if command.description:

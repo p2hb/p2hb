@@ -32,6 +32,7 @@ class Minigame(commands.Cog):
         embed = discord.Embed(
             title=f"Unscramble this pokemon for {amount} tokens",
             description=f"{scramble(species.name)}",
+            color=0xEB4634
         )
         await ctx.send(content=f"> <@!{ctx.author.id}>", embed=embed)
 
@@ -51,6 +52,7 @@ class Minigame(commands.Cog):
         embed = discord.Embed(
             title=f"{species.name} was correct!",
             description=f"You won **{amount}** tokens!",
+            color=0xEB4634
         )
         await self.bot.mongo.update_member(
             ctx.author,
@@ -78,16 +80,19 @@ class Minigame(commands.Cog):
             embed = discord.Embed(
                 title=f"Unscramble this pokemon for {amount} tokens",
                 description=f"{scramble(species.name)}",
+                color=0xEB4634
             )
         elif gamemode == 1:
             embed = discord.Embed(
                 title=f"Guess this pokemon for {amount} tokens",
                 description=f"Hint: The first letter is **{species.name[0]}**. \n \n {helper.homoglyph_convert(species.name, species.description)}",
+                color=0xEB4634
             )
         else:
             embed = discord.Embed(
                 title=f"Guess this pokemon for {amount} tokens",
                 description=f"Hint: The pokemon is **{helper.hintify(species.name)}**. \n \n",
+                color=0xEB4634
             )
             embed.add_field(
                 name="Appearance",
@@ -113,6 +118,7 @@ class Minigame(commands.Cog):
         embed = discord.Embed(
             title=f"{species.name} was correct!",
             description=f"You won **{amount}** tokens!",
+            color=0xEB4634
         )
         await self.bot.mongo.update_member(
             ctx.author,
@@ -148,6 +154,7 @@ class Minigame(commands.Cog):
         embed = discord.Embed(
             title="Spawn Duel Rules",
             description=f"I will count down from 5 to 1, after I send the question, the first person to guess the pokemon will win **{amount*2} tokens**. You will each pay **{amount} tokens** to buy in. React with ✅ to accept",
+            color=0xEB4634
         )
 
         def scramble(word):
@@ -174,6 +181,7 @@ class Minigame(commands.Cog):
         embed = discord.Embed(
             title="Beginning duel...",
             description=f"I will count down from 5 to 1, after I send the question, the first person to guess the pokemon will win **{amount*2} tokens**.",
+            color=0xEB4634
         )
         
         # duel game
@@ -192,16 +200,19 @@ class Minigame(commands.Cog):
             embed = discord.Embed(
                 title=f"Unscramble this pokemon for {amount} tokens",
                 description=f"{scramble(species.name)}",
+                color=0xEB4634
             )
         elif gamemode == 1:
             embed = discord.Embed(
                 title=f"Guess this pokemon for {amount} tokens",
                 description=f"Hint: The first letter is **{species.name[0]}**. \n \n {helper.homoglyph_convert(species.name, species.description)}",
+                color=0xEB4634
             )
         else:
             embed = discord.Embed(
                 title=f"Guess this pokemon for {amount} tokens",
                 description=f"Hint: The pokemon is **{helper.hintify(species.name)}**. \n \n",
+                color=0xEB4634
             )
             embed.add_field(
                 name="Appearance",
@@ -242,6 +253,7 @@ class Minigame(commands.Cog):
             em = discord.Embed(
                 title=f"Slow it down!",
                 description=f"Try again in {error.retry_after:.2f}s.",
+                color=0xEB4634
             )
             await ctx.send(embed=em)
     
@@ -251,6 +263,7 @@ class Minigame(commands.Cog):
             em = discord.Embed(
                 title=f"Slow it down!",
                 description=f"Try again in {error.retry_after:.2f}s.",
+                color=0xEB4634
             )
             await ctx.send(embed=em)
 

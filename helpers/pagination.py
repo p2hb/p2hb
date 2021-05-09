@@ -18,7 +18,7 @@ class AsyncListPageSource(menus.AsyncIteratorPageSource):
         )
         return discord.Embed(
             title=self.title,
-            color=discord.Color.blurple(),
+            color=0xEB4634,
             description=f"\n".join(lines),
         )
 
@@ -32,7 +32,7 @@ class AsyncFieldsPageSource(menus.AsyncIteratorPageSource):
     async def format_page(self, menu, entries):
         embed = discord.Embed(
             title=self.title,
-            color=discord.Color.blurple(),
+            color=0xEB4634,
         )
         start = menu.current_page * self.per_page
         i = start

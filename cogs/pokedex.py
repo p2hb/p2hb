@@ -24,7 +24,7 @@ class Pokedex(commands.Cog):
             if species is None:
                 return await ctx.send(f"Could not find a pokemon matching `{species}`.")
 
-        embed = discord.Embed()
+        embed = discord.Embed(color=0xEB4634)
         embed.title = f"#{species.dex_number} — {species}"
 
         if species.description:
