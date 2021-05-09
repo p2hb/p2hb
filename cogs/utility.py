@@ -59,6 +59,30 @@ class Utility(commands.Cog):
             inline = False
         )
         await ctx.send(embed = embed)
+
+    @commands.command()
+    async def stats(self, ctx):
+        """Stats"""
+
+        embed = discord.Embed(title = f"P2HB Statistics")
+        embed.add_field(
+            name = "Total servers", 
+            value = f"{len(self.bot.guilds)}", 
+            inline = False
+        )
+
+        total_members = 0
+        for guild in self.bot.guilds:
+            total_members += guild.member_count
+
+        embed.add_field(
+            name = "Total Members", 
+            value = f"{total_members}",
+            inline = False
+        )
+
+        embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/818706022675120138/38f9aaf39cf4b09e94f947e388425d19.png?size=1024")
+        await ctx.send(embed = embed)
     
 def setup(bot):
     bot.add_cog(Utility(bot))

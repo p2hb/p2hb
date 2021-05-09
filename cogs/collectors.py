@@ -1,4 +1,6 @@
 from helpers.pagination import AsyncListPageSource
+from helpers.converters import SpeciesConverter, FetchUserConverter
+
 import discord
 from discord.ext import commands, menus
 
@@ -153,6 +155,23 @@ class Collectors(commands.Cog):
             return await ctx.send(f"Removed **{species}** from your collecting list. \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
         else:
             return await ctx.send(f"**{species}** is not on your collecting list! \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
+    
+    @commands.guild_only()
+    @commands.has_permissions(manage_messages=True)
+    @collect.command(aliases = ["fr"])
+    async def forceremove(self, ctx, *, user: FetchUserConverter):
+        """Remove a player from pinging list."""
+
+        result = await self.bot.mongo.db.collector.update_one(
+            {"_id": user.id},
+            {"$unset": {str(ctx.guild.id): 1}},
+            upsert=True,
+        )
+
+        if result.upserted_id or result.modified_count > 0:
+            return await ctx.send(f"Removed **{user}** from the **{ctx.guild}** pinging list.")
+        else:
+            return await ctx.send(f"**{user}** is already not on the **{ctx.guild}** pinging list!")
 
     @collect.command()
     async def clear(self, ctx):

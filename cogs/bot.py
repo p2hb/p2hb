@@ -104,14 +104,12 @@ class Bot(commands.Cog):
     async def update_stats(self):
         """This function runs every 30 minutes to automatically update your server count."""
         await self.bot.wait_until_ready()
-        c = self.bot.get_channel(840273328136650803)
 
         try:
             server_count = len(self.bot.guilds)
             await self.dblpy.post_guild_count(server_count)
-            await c.send('Posted server count ({})'.format(server_count))
         except Exception as e:
-            await c.send('Failed to post server count\n{}: {}'.format(type(e).__name__, e))
+            pass
 
 
 def setup(bot):
