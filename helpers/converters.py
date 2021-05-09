@@ -24,6 +24,10 @@ class SpeciesConverter(commands.Converter):
             species = ctx.bot.data.species_by_name(arg)
 
         if species is None:
-            potential_matches = " ".join(f"`{x}`" for x in ctx.bot.data.closest_species_by_name(arg))
-            raise commands.BadArgument(f"Could not find a pokémon matching `{arg}`. Did you mean {potential_matches}?")
+            potential_matches = ctx.bot.data.closest_species_by_name(arg)
+            if len(potential_matches) > 0:
+                potential_matches = " Did you mean " + " ".join(f"`{x}`" for x in potential_matches) + "?"
+            else: 
+                potential_matches = ""
+            raise commands.BadArgument(f"Could not find a pokémon matching `{arg}`.{potential_matches}")
         return species
