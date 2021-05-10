@@ -1,9 +1,10 @@
+import asyncio
+import math
+import random
+
 import discord
 from discord.ext import commands
 
-import math
-import random
-import asyncio
 
 class Fun(commands.Cog):
     """Fun stuff"""

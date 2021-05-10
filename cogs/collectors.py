@@ -1,8 +1,8 @@
-from helpers.pagination import AsyncListPageSource
-from helpers.converters import SpeciesConverter, FetchUserConverter
-
 import discord
 from discord.ext import commands, menus
+from helpers.converters import FetchUserConverter, SpeciesConverter
+from helpers.pagination import AsyncListPageSource
+
 
 class Collectors(commands.Cog):
     """For collectors."""

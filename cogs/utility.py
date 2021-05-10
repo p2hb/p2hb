@@ -1,7 +1,8 @@
+import math
+
 import discord
 from discord.ext import commands
 
-import math
 
 class Utility(commands.Cog):
     """Useful tools"""

@@ -1,12 +1,13 @@
-import discord
-from discord.ext import commands
-from datetime import datetime, timedelta
-from helpers import checks, helper
 import asyncio
 import math
-from data import models
-
 import random
+from datetime import datetime, timedelta
+
+import discord
+from discord.ext import commands
+from helpers import checks, helper
+
+from data import models
 
 
 class Minigame(commands.Cog):

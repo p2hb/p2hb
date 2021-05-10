@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from helpers.utils import FakeUser
 
 import discord
 import pymongo
 from bson.objectid import ObjectId
 from discord.ext import commands, menus
 from helpers.pagination import AsyncListPageSource
+from helpers.utils import FakeUser
 
 
 @dataclass

@@ -1,11 +1,13 @@
+import pickle
+
 import discord
 from discord.ext import commands
-from data import models
-
 from motor.motor_asyncio import AsyncIOMotorClient
 from umongo import Document, EmbeddedDocument, Instance, MixinDocument, fields
 from umongo.frameworks import MotorAsyncIOInstance
-import pickle
+
+from data import models
+
 
 class Member(Document):
     class Meta:

@@ -1,9 +1,9 @@
-from helpers.pagination import AsyncListPageSource
+import math
+
 import discord
 from discord.ext import commands, menus
+from helpers.pagination import AsyncListPageSource
 
-
-import math
 
 class Reputation(commands.Cog):
     """Reputation Tools"""
