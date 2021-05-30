@@ -16,6 +16,7 @@ class Collectors(commands.Cog):
                 if self.bot.data.species_by_number(int(x)):
                     yield self.bot.data.species_by_number(int(x))
     
+    @commands.cooldown(1, 15, commands.BucketType.channel)
     @commands.command(aliases = ["cp"])
     async def collectping(self, ctx, species: SpeciesConverter):
         users = self.bot.mongo.db.collector.find({str(species.id): True, str(ctx.guild.id): True})
