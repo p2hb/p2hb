@@ -247,26 +247,6 @@ class Minigame(commands.Cog):
             )
         except:
             return await ctx.send(f"Both of you were too slow. Duel cancelled. The Pokémon was **{species.name}**")
-        
-    @spawn.error
-    async def command_name_error(self, ctx, error):
-        if isinstance(error, commands.CommandOnCooldown):
-            em = discord.Embed(
-                title=f"Slow it down!",
-                description=f"Try again in {error.retry_after:.2f}s.",
-                color=0xEB4634
-            )
-            await ctx.send(embed=em)
-    
-    @hardspawn.error
-    async def command_name_error(self, ctx, error):
-        if isinstance(error, commands.CommandOnCooldown):
-            em = discord.Embed(
-                title=f"Slow it down!",
-                description=f"Try again in {error.retry_after:.2f}s.",
-                color=0xEB4634
-            )
-            await ctx.send(embed=em)
 
 def setup(bot):
     bot.add_cog(Minigame(bot))
