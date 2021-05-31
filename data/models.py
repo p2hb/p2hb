@@ -255,6 +255,9 @@ class Move:
             if random.randrange(100) < self.meta.stat_chance:
                 changes.append(change)
 
+        if self.type in pokemon.types:
+            damage *= 1.5
+
         return MoveResult(
             success=success,
             damage=damage,
@@ -520,6 +523,7 @@ class Species:
     is_form: bool = False
     form_item: int = None
     moves: typing.List[PokemonMove] = None
+    region: str = None
 
     instance: typing.Any = UnregisteredDataManager()
 
@@ -665,6 +669,9 @@ class DataManagerBase:
 
     def list_type(self, type: str):
         return [v.id for v in self.pokemon.values() if type.title() in v.types]
+
+    def list_region(self, region: str):
+        return [v.id for v in self.pokemon.values() if v.region == region.lower()]
 
     def all_items(self):
         return self.items.values()

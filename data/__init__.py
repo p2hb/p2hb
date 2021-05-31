@@ -65,7 +65,9 @@ def get_pokemon(instance):
             return models.TradeTrigger(instance=instance)
 
         elif evo["evolution_trigger_id"] == 3:
-            return models.ItemTrigger(evo["trigger_item_id"], instance=instance)
+            if "trigger_item_id" in evo:
+                return models.ItemTrigger(evo["trigger_item_id"], instance=instance)
+            return models.OtherTrigger(instance=instance)
 
         return models.OtherTrigger(instance=instance)
 
@@ -158,6 +160,7 @@ def get_pokemon(instance):
             event="event" in row,
             is_form="is_form" in row,
             form_item=row["form_item"] if "form_item" in row else None,
+            region=row["region"],
             instance=instance,
         )
 
