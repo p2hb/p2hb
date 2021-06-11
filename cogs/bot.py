@@ -15,7 +15,7 @@ class Bot(commands.Cog):
         self.update_status.start()
 
         self.dblpy = dbl.DBLClient(self.bot, config.DBL_TOKEN)
-        self.update_stats.start()
+        self.update_dbl_stats.start()
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
@@ -75,34 +75,15 @@ class Bot(commands.Cog):
     async def update_status(self):
         await self.bot.wait_until_ready()
 
-        total_members = 0
-        for guild in self.bot.guilds:
-            total_members += guild.member_count
-
         await self.bot.change_presence(
             activity=discord.Activity(
                 type=discord.ActivityType.watching,
-                name=f">help | {total_members:,} users",
+                name=f">help | {len(self.bot.guilds): ,} servers",
             )
         )
     
     @tasks.loop(minutes=30)
-    async def update_stats(self):
-        await self.bot.wait_until_ready()
-
-        total_members = 0
-        for guild in self.bot.guilds:
-            total_members += guild.member_count
-
-        await self.bot.change_presence(
-            activity=discord.Activity(
-                type=discord.ActivityType.watching,
-                name=f">help | {total_members:,} users",
-            )
-        )
-    
-    @tasks.loop(minutes=30)
-    async def update_stats(self):
+    async def update_dbl_stats(self):
         """This function runs every 30 minutes to automatically update your server count."""
         await self.bot.wait_until_ready()
 
