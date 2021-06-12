@@ -43,9 +43,9 @@ class Collectors(commands.Cog):
 
     @commands.group(aliases=("col",), invoke_without_command=True)
     async def collect(self, ctx, *, member: discord.Member = None):
-        """Allows members to keep track of the collectors for a pokémon species.
+        """Allows members to keep track of the collectors for a pokémon or region.
 
-        If no subcommand is called, lists the pokémon collected by you or someone else.
+        If no subcommand is called, lists the pokémon or regions collected by you or someone else.
         """
 
         if member is None:
@@ -64,7 +64,7 @@ class Collectors(commands.Cog):
         try:
             await pages.start(ctx)
         except IndexError:
-            await ctx.send("No pokémon found.")
+            await ctx.send("No pokémon or regions found.")
 
     @collect.command()
     async def enable(self, ctx):
@@ -130,7 +130,7 @@ class Collectors(commands.Cog):
 
     @collect.command()
     async def add(self, ctx, *, species: SpeciesConverter):
-        """Adds a pokémon species to your collecting list."""
+        """Adds a pokémon or region to your collecting list."""
 
         result = await self.bot.mongo.db.collector.update_one(
             {"_id": ctx.author.id},
@@ -149,7 +149,7 @@ class Collectors(commands.Cog):
 
     @collect.command()
     async def remove(self, ctx, *, species: SpeciesConverter):
-        """Remove a pokémon species from your collecting list."""
+        """Remove a pokémon or region from your collecting list."""
 
         result = await self.bot.mongo.db.collector.update_one(
             {"_id": ctx.author.id},
@@ -195,7 +195,7 @@ class Collectors(commands.Cog):
 
     @collect.command()
     async def globalsearch(self, ctx, *, species: SpeciesConverter):
-        """Lists the collectors of a pokémon species."""
+        """Lists the collectors of a pokémon or region."""
 
         users = self.bot.mongo.db.collector.find({str(species.id): True})
         pages = menus.MenuPages(
@@ -213,7 +213,7 @@ class Collectors(commands.Cog):
 
     @collect.command()
     async def search(self, ctx, *, species: SpeciesConverter):
-        """Lists the collectors of a pokémon species in the server."""
+        """Lists the collectors of a pokémon or region in the server."""
 
         users = self.bot.mongo.db.collector.find(
             {str(species.id): True, str(ctx.guild.id): True}
