@@ -25,7 +25,7 @@ COGS = [
     "pokedex",
     "duel",
     "event",
-    "config"
+    "configuration"
 ]
 
 async def _prefix_callable(bot, msg):
