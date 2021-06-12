@@ -1,7 +1,10 @@
+import datetime
+import asyncio
+
 import discord
 from discord.ext import commands, events
 from discord.ext.events import member_kick
-import datetime
+
 import config
 
 COGS = [
@@ -21,15 +24,25 @@ COGS = [
     "minigame",
     "pokedex",
     "duel",
-    "event"
+    "event",
+    "config"
 ]
 
+async def _prefix_callable(bot, msg):
+    user_id = bot.user.id
+    base = [f'<@!{user_id}> ', f'<@{user_id}> ']
+    if msg.guild is None:
+        base.append(config.DEFAULT_PREFIX)
+    else:
+        guild = await bot.mongo.fetch_guild(msg.guild)
+        base.append(guild.prefix)
+    return base
 
-class Bot(commands.Bot, events.EventsMixin):
+class Bot(commands.AutoShardedBot, events.EventsMixin):
     def __init__(self, **kwargs):
         super().__init__(
             **kwargs,
-            command_prefix=config.PREFIX,
+            command_prefix= _prefix_callable,
             allowed_mentions=discord.AllowedMentions(everyone=False, roles=False),
             case_insensitive=True,
         )

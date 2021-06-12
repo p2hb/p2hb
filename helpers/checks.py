@@ -6,15 +6,20 @@ def is_admin():
         commands.is_owner(), commands.has_permissions(administrator=True)
     )
 
+
 def is_banker():
     async def predicate(ctx):
-        is_banker = ctx.guild.get_role(819688054276751381) in ctx.author.roles
-        if (not is_banker):
-            raise commands.CheckFailure(
-                f"You are not a banker."
-            )
+        try:
+            is_banker = ctx.guild.get_role(819688054276751381) in ctx.author.roles
+        except AttributeError:
+            return False
+
+        if not is_banker:
+            raise commands.CheckFailure(f"You are not a banker.")
         return is_banker
+
     return commands.check(predicate)
+
 
 def has_started():
     async def predicate(ctx):
@@ -24,7 +29,7 @@ def has_started():
 
         if member is None:
             raise commands.CheckFailure(
-                f"Please first start by running `>start`!"
+                f"Please first start by running `{ctx.prefix}start`!"
             )
 
         if member.suspended:
@@ -34,19 +39,20 @@ def has_started():
 
     return commands.check(predicate)
 
+
 def in_event():
     async def predicate(ctx):
-        member = await ctx.bot.mongo.Member.find_one(
-            {"id": ctx.author.id}
-        )
+        member = await ctx.bot.mongo.Member.find_one({"id": ctx.author.id})
 
         if member is None:
             raise commands.CheckFailure(
-                f"Please first start by running `>start`!"
+                f"Please first start by running `{ctx.prefix}start`!"
             )
 
         if not member.event_activated:
-            raise commands.CheckFailure("You need to join the event with `>event join`")
+            raise commands.CheckFailure(
+                f"You need to join the event with `{ctx.prefix}event join`"
+            )
 
         return True
 

@@ -40,7 +40,7 @@ class Admin(commands.Cog):
     async def addbal(self, ctx, user: FetchUserConverter, amount=0):
         u = await self.bot.mongo.fetch_member_info(user)
         if u is None:
-            return await ctx.send(f"**{user.name}** needs to run `>start`")
+            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
         elif u.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
 
@@ -53,7 +53,7 @@ class Admin(commands.Cog):
     async def addpoints(self, ctx, user: FetchUserConverter, amount=0):
         u = await self.bot.mongo.fetch_member_info(user)
         if u is None:
-            return await ctx.send(f"**{user.name}** needs to run `>start`")
+            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
         elif u.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
         elif not u.event_activated:
@@ -67,7 +67,7 @@ class Admin(commands.Cog):
     async def add_untrack_bal(self, ctx, user: FetchUserConverter, amount=0):
         u = await self.bot.mongo.fetch_member_info(user)
         if u is None:
-            return await ctx.send(f"**{user.name}** needs to run `>start`")
+            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
         elif u.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
 
@@ -79,11 +79,12 @@ class Admin(commands.Cog):
     async def showbal(self, ctx, user: FetchUserConverter):
         u = await self.bot.mongo.fetch_member_info(user)
         if u is None:
-            return await ctx.send(f"**{user.name}** needs to run `>start`")
+            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
         elif u.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
 
-        embed = discord.Embed(title=f"{user.display_name}'s balance", color=0xEB4634)
+        embed = discord.Embed(color=0xEB4634)
+        embed.title =f"{user.display_name}'s balance", 
         embed.add_field(name="Tokens", value=f"{u.balance:,}")
         return await ctx.send(embed=embed)
 

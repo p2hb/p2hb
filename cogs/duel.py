@@ -31,7 +31,7 @@ class Duel(commands.Cog):
         player2 = await self.bot.mongo.fetch_member_info(user)
 
         if player2 is None:
-            return await ctx.send(f"**{user.name}** needs to run `>start`")
+            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
         elif player2.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
 
@@ -43,7 +43,7 @@ class Duel(commands.Cog):
         embed = discord.Embed(
             title="Reaction Duel Rules",
             description=f"I will count down from 5 to 1, after I say go!, the first person to type `bang` will win **{amount*2} tokens**. You will each pay **{amount} tokens** to buy in. React with ✅ to accept",
-            color=0xEB4634
+            color=0xEB4634,
         )
 
         confirm_message = await ctx.send(f"> Challenging <@!{user.id}>...", embed=embed)
@@ -64,7 +64,7 @@ class Duel(commands.Cog):
         embed = discord.Embed(
             title="Beginning reaction duel...",
             description=f"I will count down from 5 to 1, after I say go!, the first person to type `bang` will win **{amount*2} tokens**.",
-            color=0xEB4634
+            color=0xEB4634,
         )
 
         await ctx.send(f"> <@!{ctx.author.id}> vs <@!{user.id}>\n", embed=embed)
@@ -100,7 +100,7 @@ class Duel(commands.Cog):
             )
         except:
             return await ctx.send(f"Both of you were too slow. Duel cancelled.")
-    
+
     @checks.has_started()
     @commands.guild_only()
     @commands.max_concurrency(1, commands.BucketType.user)
@@ -116,7 +116,7 @@ class Duel(commands.Cog):
         player2 = await self.bot.mongo.fetch_member_info(user)
 
         if player2 is None:
-            return await ctx.send(f"**{user.name}** needs to run `>start`")
+            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
         elif player2.suspended:
             return await ctx.send(f"**{user.name}** is suspended")
 
@@ -129,7 +129,7 @@ class Duel(commands.Cog):
         embed = discord.Embed(
             title="Duel Rules",
             description=f"I will count down from 5 to 1, after I say go!, the first person to type the message will win **{amount*2} tokens**. You will each pay **{amount} tokens** to buy in. React with ✅ to accept",
-            color=0xEB4634
+            color=0xEB4634,
         )
 
         confirm_message = await ctx.send(f"> Challenging <@!{user.id}>...", embed=embed)
@@ -150,7 +150,7 @@ class Duel(commands.Cog):
         embed = discord.Embed(
             title="Beginning duel...",
             description=f"I will count down from 5 to 1, after I say go!, the first person to type the message will win **{amount*2} tokens**.",
-            color=0xEB4634
+            color=0xEB4634,
         )
 
         await ctx.send(f"> <@!{ctx.author.id}> vs <@!{user.id}>\n", embed=embed)
@@ -188,7 +188,7 @@ class Duel(commands.Cog):
             )
         except:
             return await ctx.send(f"Both of you were too slow. Duel cancelled.")
-    
+
+
 def setup(bot):
     bot.add_cog(Duel(bot))
-

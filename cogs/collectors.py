@@ -15,18 +15,31 @@ class Collectors(commands.Cog):
             if x != "_id":
                 if self.bot.data.species_by_number(int(x)):
                     yield self.bot.data.species_by_number(int(x))
-    
+
     @commands.cooldown(1, 5, commands.BucketType.guild)
-    @commands.command(aliases = ["cp"])
+    @commands.command(aliases=["cp"])
     async def collectping(self, ctx, species: SpeciesConverter):
-        users = self.bot.mongo.db.collector.find({str(species.id): True, str(ctx.guild.id): True})
+        guild = await ctx.bot.mongo.fetch_guild(ctx.guild)
+        if guild.ping_channels and ctx.channel.id not in guild.ping_channels:
+            return await ctx.send(
+                f"The server admin has not whitelisted this channel! To add a channel to the whitelist, run `{ctx.prefix}whitelist <channels>`. To check whitelisted channels, run `{ctx.prefix}config`."
+            )
+
+        users = self.bot.mongo.db.collector.find(
+            {str(species.id): True, str(ctx.guild.id): True}
+        )
+
         collector_pings = []
         async for user in users:
             collector_pings.append(f"<@{user['_id']}> ")
         if len(collector_pings) > 0:
-            await ctx.send(f"**Pinging {species} Collectors** \n \n" + " ".join(collector_pings))
+            await ctx.send(
+                f"**Pinging {species} Collectors** \n \n" + " ".join(collector_pings)
+            )
         else:
-            await ctx.send(f"No one is collecting {species}! \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
+            await ctx.send(
+                f"No one is collecting {species}! \n \n**Tip:** You can run `{ctx.prefix}collect enable` or `{ctx.prefix}collect disable` to disable or enable collect pings on a server! By default, this option will be off."
+            )
 
     @commands.group(aliases=("col",), invoke_without_command=True)
     async def collect(self, ctx, *, member: discord.Member = None):
@@ -52,7 +65,7 @@ class Collectors(commands.Cog):
             await pages.start(ctx)
         except IndexError:
             await ctx.send("No pokémon found.")
-        
+
     @collect.command()
     async def enable(self, ctx):
         """Adds a server to your pinging list."""
@@ -67,7 +80,7 @@ class Collectors(commands.Cog):
             return await ctx.send(f"Added **{ctx.guild}** to your server pinging list.")
         else:
             return await ctx.send(f"**{ctx.guild}** is already on your server list!")
-    
+
     @collect.command()
     async def disable(self, ctx):
         """Adds a server to your pinging list."""
@@ -78,16 +91,18 @@ class Collectors(commands.Cog):
         )
 
         if result.upserted_id or result.modified_count > 0:
-            return await ctx.send(f"Removed **{ctx.guild}** from your server pinging list.")
+            return await ctx.send(
+                f"Removed **{ctx.guild}** from your server pinging list."
+            )
         else:
-            return await ctx.send(f"**{ctx.guild}** is already not on your server list!")
-    
+            return await ctx.send(
+                f"**{ctx.guild}** is already not on your server list!"
+            )
+
     @collect.command()
     async def serverlist(self, ctx):
         """Adds a server to your pinging list."""
-        result = await self.bot.mongo.db.collector.find_one(
-            {"_id": ctx.author.id}
-        )
+        result = await self.bot.mongo.db.collector.find_one({"_id": ctx.author.id})
 
         async def get_guild(result):
             for key in result:
@@ -99,7 +114,7 @@ class Collectors(commands.Cog):
                     pass
 
         guilds = get_guild(result)
-        
+
         pages = menus.MenuPages(
             source=AsyncListPageSource(
                 guilds,
@@ -124,9 +139,13 @@ class Collectors(commands.Cog):
         )
 
         if result.upserted_id or result.modified_count > 0:
-            return await ctx.send(f"Added **{species}** to your collecting list. \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
+            return await ctx.send(
+                f"Added **{species}** to your collecting list. \n \n**Tip:** You can run `{ctx.prefix}collect enable` or `{ctx.prefix}collect disable` to disable or enable collect pings on a server! By default, this option will be off."
+            )
         else:
-            return await ctx.send(f"**{species}** is already on your collecting list!  \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
+            return await ctx.send(
+                f"**{species}** is already on your collecting list!  \n \n**Tip:** You can run `{ctx.prefix}collect enable` or `{ctx.prefix}collect disable` to disable or enable collect pings on a server! By default, this option will be off."
+            )
 
     @collect.command()
     async def remove(self, ctx, *, species: SpeciesConverter):
@@ -138,13 +157,17 @@ class Collectors(commands.Cog):
         )
 
         if result.modified_count > 0:
-            return await ctx.send(f"Removed **{species}** from your collecting list. \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
+            return await ctx.send(
+                f"Removed **{species}** from your collecting list. \n \n**Tip:** You can run `{ctx.prefix}collect enable` or `{ctx.prefix}collect disable` to disable or enable collect pings on a server! By default, this option will be off."
+            )
         else:
-            return await ctx.send(f"**{species}** is not on your collecting list! \n \n**Tip:** You can run `>collect enable` or `>collect disable` to disable or enable collect pings on a server! By default, this option will be off.")
-    
+            return await ctx.send(
+                f"**{species}** is not on your collecting list! \n \n**Tip:** You can run `{ctx.prefix}collect enable` or `{ctx.prefix}collect disable` to disable or enable collect pings on a server! By default, this option will be off."
+            )
+
     @commands.guild_only()
     @commands.has_permissions(manage_messages=True)
-    @collect.command(aliases = ["fr"])
+    @collect.command(aliases=["fr"])
     async def forceremove(self, ctx, *, user: FetchUserConverter):
         """Remove a player from pinging list."""
 
@@ -155,9 +178,13 @@ class Collectors(commands.Cog):
         )
 
         if result.upserted_id or result.modified_count > 0:
-            return await ctx.send(f"Removed **{user}** from the **{ctx.guild}** pinging list.")
+            return await ctx.send(
+                f"Removed **{user}** from the **{ctx.guild}** pinging list."
+            )
         else:
-            return await ctx.send(f"**{user}** is already not on the **{ctx.guild}** pinging list!")
+            return await ctx.send(
+                f"**{user}** is already not on the **{ctx.guild}** pinging list!"
+            )
 
     @collect.command()
     async def clear(self, ctx):
@@ -183,12 +210,14 @@ class Collectors(commands.Cog):
             await pages.start(ctx)
         except IndexError:
             await ctx.send("No users found.")
-    
+
     @collect.command()
     async def search(self, ctx, *, species: SpeciesConverter):
         """Lists the collectors of a pokémon species in the server."""
 
-        users = self.bot.mongo.db.collector.find({str(species.id): True, str(ctx.guild.id): True})
+        users = self.bot.mongo.db.collector.find(
+            {str(species.id): True, str(ctx.guild.id): True}
+        )
         pages = menus.MenuPages(
             source=AsyncListPageSource(
                 users,
@@ -202,13 +231,13 @@ class Collectors(commands.Cog):
         except IndexError:
             await ctx.send("No users found.")
 
-    @commands.command(aliases = ["cols", "cs"])
+    @commands.command(aliases=["cols", "cs"])
     async def collectors(self, ctx, *, species: SpeciesConverter):
         """An alias for the collect search command."""
 
         await ctx.invoke(self.search, species=species)
-    
-    @commands.command(aliases = ["colgs", "cgs"])
+
+    @commands.command(aliases=["colgs", "cgs"])
     async def collectglobalsearch(self, ctx, *, species: SpeciesConverter):
         """An alias for the collect serversearch command."""
 

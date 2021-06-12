@@ -22,12 +22,12 @@ class Bot(commands.Cog):
         if isinstance(error, commands.NoPrivateMessage):
             await ctx.send("This command cannot be used in private messages.")
         elif isinstance(error, commands.CommandOnCooldown):
-            em = discord.Embed(
+            embed = discord.Embed(
                 title=f"Slow it down!",
                 description=f"Try again in {error.retry_after:.2f}s.",
                 color=0xEB4634
             )
-            await ctx.send(embed=em)
+            await ctx.send(embed=embed)
         elif isinstance(error, commands.DisabledCommand):
             await ctx.send("Sorry. This command is disabled and cannot be used.")
         elif isinstance(error, commands.BotMissingPermissions):

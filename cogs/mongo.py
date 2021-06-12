@@ -7,6 +7,7 @@ from umongo import Document, EmbeddedDocument, Instance, MixinDocument, fields
 from umongo.frameworks import MotorAsyncIOInstance
 
 from data import models
+import config
 
 
 class Member(Document):
@@ -54,6 +55,15 @@ class Global(Document):
     pray_winnings = fields.IntegerField(default=0)
     active_raffle = fields.StringField()
 
+class Guild(Document):
+    class Meta:
+        collection_name = "guild"
+
+    id = fields.IntegerField(attribute="_id")
+
+    ping_channels = fields.ListField(fields.IntegerField, default=list)
+    prefix = fields.StringField(default=config.DEFAULT_PREFIX)
+
 class Mongo(commands.Cog):
     """For database operations."""
 
@@ -65,6 +75,7 @@ class Mongo(commands.Cog):
         instance = MotorAsyncIOInstance(self.db)
         self.Member = instance.register(Member)
         self.Global = instance.register(Global)
+        self.Guild = instance.register(Guild)
 
     async def reserve_id(self, name, reserve=1):
         result = await self.db.counter.find_one_and_update(
@@ -81,6 +92,19 @@ class Mongo(commands.Cog):
         if result is None:
             return 0
         return result["next"]
+    
+    async def fetch_guild(self, guild: discord.Guild):
+        g = await self.Guild.find_one({"id": guild.id})
+        if g is None:
+            g = self.Guild(id=guild.id)
+            try:
+                await g.commit()
+            except:
+                pass
+        return g
+
+    async def update_guild(self, guild: discord.Guild, update):
+        return await self.db.guild.update_one({"_id": guild.id}, update, upsert=True)
 
     async def fetch_member_info(self, member: discord.Member):
         mem = await self.Member.find_one(
