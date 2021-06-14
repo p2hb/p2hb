@@ -17,6 +17,20 @@ class Casino(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.Cog.listener()
+    async def on_message(self, msg: discord.Message):
+        if msg.author.id == self.bot.user.id or msg.author.bot:
+            return
+
+        if msg.channel.id == 818699156784152577:
+            if random.randint(1,200) == 100:
+                await self.bot.mongo.update_member(msg.author, {"$inc": {"balance": 500}})
+
+                embed = discord.Embed(color=0xEB4634)
+                embed.title = f"Nice message!"
+                embed.description = f"You won **300** tokens!"
+                return await msg.reply(embed=embed)
+
     @commands.command()
     async def start(self, ctx):
         member = await self.bot.mongo.fetch_member_info(ctx.author)
