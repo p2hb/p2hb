@@ -153,7 +153,7 @@ class Casino(commands.Cog):
                 dice_roll = random.randint(1, 3)
 
             embed = discord.Embed(color=0xEB4634)
-            embed.title = (f"Dice Roll — {amount}",)
+            embed.title = f"Dice Roll — {amount}"
             embed.add_field(name="Roll", value=f"You rolled a **{dice_roll}**.")
             if dice_roll >= 4:
                 await self.bot.mongo.update_member(
@@ -212,7 +212,7 @@ class Casino(commands.Cog):
                 flip = "tails" if choice == "heads" else "heads"
 
             embed = discord.Embed(color=0xEB4634)
-            embed.title = (f"Coinflip — {amount}",)
+            embed.title = f"Coinflip — {amount}"
             embed.add_field(
                 name="Win Condition", value=f"{choice.capitalize()}", inline=False
             )
