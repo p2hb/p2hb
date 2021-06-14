@@ -23,12 +23,13 @@ class Casino(commands.Cog):
             return
 
         if msg.channel.id == 818699156784152577:
-            if random.randint(1,200) == 100:
-                await self.bot.mongo.update_member(msg.author, {"$inc": {"balance": 100}})
+            if random.randint(1,70) == 35:
+                winnings = random.randint(5,100)
+                await self.bot.mongo.update_member(msg.author, {"$inc": {"balance": winnings}})
 
                 embed = discord.Embed(color=0xEB4634)
                 embed.title = f"Nice message!"
-                embed.description = f"You won **100** tokens!"
+                embed.description = f"You won **{winnings}** tokens!"
                 return await msg.reply(embed=embed)
 
     @commands.command()
