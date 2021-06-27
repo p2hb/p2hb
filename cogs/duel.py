@@ -20,7 +20,7 @@ class Duel(commands.Cog):
     @commands.guild_only()
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.command(aliases=["rd"])
-    async def reactionduel(self, ctx, user: discord.User, amount=10):
+    async def reactionduel(self, ctx, user: discord.User, amount=1):
         if amount < 0:
             return await ctx.send("Nice Try")
 
@@ -105,7 +105,7 @@ class Duel(commands.Cog):
     @commands.guild_only()
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.command()
-    async def duel(self, ctx, user: discord.User, amount=10):
+    async def duel(self, ctx, user: discord.User, amount=1):
         if amount < 0:
             return await ctx.send("Nice Try")
 
