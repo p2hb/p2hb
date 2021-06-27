@@ -24,8 +24,8 @@ class Duel(commands.Cog):
         if amount < 0:
             return await ctx.send("Nice Try")
 
-        if user == ctx.author:
-            return await ctx.send("You can not play yourself.")
+        if user == ctx.author or user == self.bot.user:
+            return await ctx.send("You can not play yourself or the bot.")
 
         player1 = await self.bot.mongo.fetch_member_info(ctx.author)
         player2 = await self.bot.mongo.fetch_member_info(user)
@@ -109,8 +109,8 @@ class Duel(commands.Cog):
         if amount < 0:
             return await ctx.send("Nice Try")
 
-        if user == ctx.author:
-            return await ctx.send("You can not play yourself.")
+        if user == ctx.author or user == self.bot.user:
+            return await ctx.send("You can not play yourself or the bot.")
 
         player1 = await self.bot.mongo.fetch_member_info(ctx.author)
         player2 = await self.bot.mongo.fetch_member_info(user)
