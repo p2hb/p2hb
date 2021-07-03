@@ -392,12 +392,12 @@ class Casino(commands.Cog):
             
             # reaction check
             def check(reaction, react_user):
-                if (react_user.id == ctx.author.id and (str(reaction.emoji) == "🛑") and reaction.message.id == confirm_message.id):
+                if (react_user.id == ctx.author.id and (str(reaction.emoji) == "🛑") and reaction.message.id == prev.id):
                     stay=True
                 return (
                     react_user.id == ctx.author.id
                     and (str(reaction.emoji) == "🛑" or str(reaction.emoji) == "👊")
-                    and reaction.message.id == confirm_message.id
+                    and reaction.message.id == prev.id
                 )
             
             # loop through turns until bust or stand
