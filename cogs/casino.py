@@ -471,17 +471,17 @@ class Casino(commands.Cog):
 
                 await prev.add_reaction("👊")
                 await prev.add_reaction("🛑")
-                try:
-                    msg_response = asyncio.create_task(self.bot.wait_for('message', check=message_check))
-                    react_response = asyncio.create_task(self.bot.wait_for('reaction_add', check=reaction_check))
-                    done, pending = await asyncio.wait((msg_response, react_response), timeout = 15, return_when = asyncio.FIRST_COMPLETED)
-                    if msg_response in done:
-                        if msg_response.result().content in ("s", "stand"):
-                            stay = True
-                    elif react_response in done:
-                        if str(react_response.result()[0].emoji) == "🛑":
-                            stay = True
-                except asyncio.TimeoutError:
+
+                msg_response = asyncio.create_task(self.bot.wait_for('message', check=message_check))
+                react_response = asyncio.create_task(self.bot.wait_for('reaction_add', check=reaction_check))
+                done, pending = await asyncio.wait((msg_response, react_response), timeout = 15, return_when = asyncio.FIRST_COMPLETED)
+                if msg_response in done:
+                    if msg_response.result().content in ("s", "stand"):
+                        stay = True
+                elif react_response in done:
+                    if str(react_response.result()[0].emoji) == "🛑":
+                        stay = True
+                else:
                     await ctx.send("Took too long to respond, automatically standing.")
                     stay = True
                 if not stay:
