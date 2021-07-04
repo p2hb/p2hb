@@ -392,8 +392,6 @@ class Casino(commands.Cog):
             
             # reaction check
             def check(reaction, react_user):
-                if (react_user.id == ctx.author.id and (str(reaction.emoji) == "🛑") and reaction.message.id == prev.id):
-                    stay=True
                 return (
                     react_user.id == ctx.author.id
                     and (str(reaction.emoji) == "🛑" or str(reaction.emoji) == "👊")
@@ -422,6 +420,8 @@ class Casino(commands.Cog):
                 await prev.add_reaction("🛑")
                 try:
                     conf = await self.bot.wait_for("reaction_add", timeout=10, check=check)
+                    if str(conf.emoji) == "🛑":
+                        stay = True
                 except asyncio.TimeoutError:
                     await ctx.send("Took too long to respond, automatically standing.")
                     stay=True
