@@ -23,9 +23,11 @@ class Casino(commands.Cog):
             return
 
         if msg.channel.id == 818699156784152577:
-            if random.randint(1,70) == 35:
-                winnings = random.randint(5,100)
-                await self.bot.mongo.update_member(msg.author, {"$inc": {"balance": winnings}})
+            if random.randint(1, 70) == 35:
+                winnings = random.randint(5, 100)
+                await self.bot.mongo.update_member(
+                    msg.author, {"$inc": {"balance": winnings}}
+                )
 
                 embed = discord.Embed(color=0xEB4634)
                 embed.title = f"Nice message!"
@@ -275,27 +277,67 @@ class Casino(commands.Cog):
                     f"You don't have enough tokens to play (min: {amount})"
                 )
             # deck
-            cards = ["A♠️", "A♥️", "A♣️", "A♦️",
-            "2♠️", "2♥️", "2♣️", "2♦️",
-            "3♠️", "3♥️", "3♣️", "3♦️",
-            "4♠️", "4♥️", "4♣️", "4♦️",
-            "5♠️", "5♥️", "5♣️", "5♦️",
-            "6♠️", "6♥️", "6♣️", "6♦️",
-            "7♠️", "7♥️", "7♣️", "7♦️",
-            "8♠️", "8♥️", "8♣️", "8♦️",
-            "9♠️", "9♥️", "9♣️", "9♦️",
-            "10♠️", "10♥️", "10♣️", "10♦️",
-            "J♠️", "J♥️", "J♣️", "J♦️",
-            "Q♠️", "Q♥️", "Q♣️", "Q♦️",
-            "K♠️", "K♥️", "K♣️", "K♦️"]
+            cards = [
+                "A♠️",
+                "A♥️",
+                "A♣️",
+                "A♦️",
+                "2♠️",
+                "2♥️",
+                "2♣️",
+                "2♦️",
+                "3♠️",
+                "3♥️",
+                "3♣️",
+                "3♦️",
+                "4♠️",
+                "4♥️",
+                "4♣️",
+                "4♦️",
+                "5♠️",
+                "5♥️",
+                "5♣️",
+                "5♦️",
+                "6♠️",
+                "6♥️",
+                "6♣️",
+                "6♦️",
+                "7♠️",
+                "7♥️",
+                "7♣️",
+                "7♦️",
+                "8♠️",
+                "8♥️",
+                "8♣️",
+                "8♦️",
+                "9♠️",
+                "9♥️",
+                "9♣️",
+                "9♦️",
+                "10♠️",
+                "10♥️",
+                "10♣️",
+                "10♦️",
+                "J♠️",
+                "J♥️",
+                "J♣️",
+                "J♦️",
+                "Q♠️",
+                "Q♥️",
+                "Q♣️",
+                "Q♦️",
+                "K♠️",
+                "K♥️",
+                "K♣️",
+                "K♦️",
+            ]
             random.shuffle(cards)
-            
+
             # helper to get value of a hand
             def value(h):
-                cs=h.split()
-                v=0
-                a=0
-                for c in cs:
+                v = 0
+                a = 0
+                for c in h:
                     cv = c[0]
                     if cv == "1" or cv == "J" or cv == "Q" or cv == "K":
                         cv = "10"
@@ -306,19 +348,18 @@ class Casino(commands.Cog):
                         cv = "0"
                     cv = int(cv)
                     v += cv
-                while v>21:
-                    if a>0:
+                while v > 21:
+                    if a > 0:
                         a -= 1
                         v -= 10
                     else:
                         break
                 return v
-            
+
             def soft(h):
-                cs=h.split()
-                v=0
-                a=0
-                for c in cs:
+                v = 0
+                a = 0
+                for c in h:
                     cv = c[0]
                     if cv == "1" or cv == "J" or cv == "Q" or cv == "K":
                         cv = "10"
@@ -329,41 +370,46 @@ class Casino(commands.Cog):
                         cv = "0"
                     cv = int(cv)
                     v += cv
-                while v>21:
-                    if a>0:
+                while v > 21:
+                    if a > 0:
                         a -= 1
                         v -= 10
                     else:
                         break
-                return a>0
-            
+                return a > 0
+
+            def format_hand(hand):
+                return " ".join(f"`{card}`" for card in hand)
+
             # initialize variables
-            stay=False
-            hand=cards[0]+"  "+cards[1]
+            stay = False
+            hand = [cards[0], cards[1]]
             hhit = 2
-            dealer=cards[51]+"  ??"
+            dealer = [cards[51], "??"]
             dhit = 49
-            
+
             # player blackjack
-            if value(hand)==21:
-                dealer=cards[51]+"  "+cards[50]
+            if value(hand) == 21:
+                dealer = [cards[51], cards[50]]
                 # both blackjack (= draw)
-                if value(dealer)==21:
+                if value(dealer) == 21:
                     embed = discord.Embed(
                         title=f"Blackjack — {amount}",
                         description="You drew!",
                         color=0xEB4634,
                     )
                     embed.add_field(
-                    name="Hand",
-                    value=f"{hand}\nValue: {value(hand)}",
+                        name="Hand",
+                        value=f"{format_hand(hand)}\nValue: {value(hand)}",
                     )
                     embed.add_field(
-                    name="Dealer",
-                    value=f"{dealer}\nValue: {value(dealer)}",
+                        name="Dealer",
+                        value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                     )
                     embed.add_field(
-                        name="Winnings", value=f"You won **{amount} tokens.**", inline=False
+                        name="Winnings",
+                        value=f"You won **{amount} tokens.**",
+                        inline=False,
                     )
                     return await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
                 # player blackjack and wins
@@ -374,80 +420,93 @@ class Casino(commands.Cog):
                         color=0xEB4634,
                     )
                     embed.add_field(
-                    name="Hand",
-                    value=f"{hand}\nValue: {value(hand)}",
+                        name="Hand",
+                        value=f"{format_hand(hand)}\nValue: {value(hand)}",
                     )
                     embed.add_field(
-                    name="Dealer",
-                    value=f"{dealer}\nValue: {value(dealer)}",
+                        name="Dealer",
+                        value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                     )
                     await self.bot.mongo.update_member(
                         ctx.author, {"$inc": {"balance": amount}}
                     )
                     embed.add_field(
-                        name="Winnings", value=f"You won **{amount*2} tokens.**", inline=False
+                        name="Winnings",
+                        value=f"You won **{amount*2} tokens.**",
+                        inline=False,
                     )
                     return await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
-                
-            
+
             # reaction check
-            def check(reaction, react_user):
-                if (react_user.id == ctx.author.id and (str(reaction.emoji) == "🛑") and reaction.message.id == prev.id):
-                    stay=True
+            def reaction_check(reaction, react_user):
                 return (
                     react_user.id == ctx.author.id
                     and (str(reaction.emoji) == "🛑" or str(reaction.emoji) == "👊")
                     and reaction.message.id == prev.id
                 )
             
+            def message_check(msg):
+                return (
+                    msg.author.id == ctx.author.id
+                    and msg.channel.id == ctx.channel.id
+                    and msg.content in ("h", "hit", "s", "stand")
+                )
+
             # loop through turns until bust or stand
-            while (not stay):
-            
+            while not stay:
                 embed = discord.Embed(
                     title=f"Blackjack — {amount}",
                     description="React with 👊 to hit and 🛑 to stand.",
                     color=0xEB4634,
                 )
                 embed.add_field(
-                name="Hand",
-                value=f"{hand}\nValue: {value(hand)}",
+                    name="Hand",
+                    value=f"{format_hand(hand)}\nValue: {value(hand)}",
                 )
                 embed.add_field(
-                name="Dealer",
-                value=f"{dealer}\nValue: {value(dealer)}",
+                    name="Dealer",
+                    value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                 )
                 prev = await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
-                
+
                 await prev.add_reaction("👊")
                 await prev.add_reaction("🛑")
                 try:
-                    conf = await self.bot.wait_for("reaction_add", timeout=10, check=check)
+                    msg_response = asyncio.create_task(self.bot.wait_for('message', check=message_check))
+                    react_response = asyncio.create_task(self.bot.wait_for('reaction_add', check=reaction_check))
+                    done, pending = await asyncio.wait((msg_response, react_response), timeout = 15, return_when = asyncio.FIRST_COMPLETED)
+                    if msg_response in done:
+                        if msg_response.result().content in ("s", "stand"):
+                            stay = True
+                    elif react_response in done:
+                        if str(react_response.result()[0].emoji) == "🛑":
+                            stay = True
                 except asyncio.TimeoutError:
                     await ctx.send("Took too long to respond, automatically standing.")
-                    stay=True
-                if (not stay):
-                    hand+="  "+cards[hhit]
-                    hhit+=1
-                    if (value(hand)>21):
-                        stay=True
-            
+                    stay = True
+                if not stay:
+                    hand.append(cards[hhit])
+                    hhit += 1
+                    if value(hand) > 21:
+                        stay = True
+
             # fix dealer hand
-            dealer=cards[51]+"  "+cards[50]
-            
+            dealer = [cards[51], cards[50]]
+
             # bust
-            if value(hand)>21:
+            if value(hand) > 21:
                 embed = discord.Embed(
                     title=f"Blackjack — {amount}",
                     description="You busted!",
                     color=0xEB4634,
                 )
                 embed.add_field(
-                name="Hand",
-                value=f"{hand}\nValue: {value(hand)}",
+                    name="Hand",
+                    value=f"{format_hand(hand)}\nValue: {value(hand)}",
                 )
                 embed.add_field(
-                name="Dealer",
-                value=f"{dealer}\nValue: {value(dealer)}",
+                    name="Dealer",
+                    value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                 )
                 await self.bot.mongo.update_member(
                     ctx.author, {"$inc": {"balance": -1 * amount}}
@@ -458,48 +517,52 @@ class Casino(commands.Cog):
                 return await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
             else:
                 # deal dealer's cards
-                while(value(dealer)<17 or (value(dealer)==17 and soft(dealer))):
-                    dealer+="  "+cards[dhit]
-                    dhit-=1
+                while value(dealer) < 17 or (value(dealer) == 17 and soft(dealer)):
+                    dealer.append(cards[dhit])
+                    dhit -= 1
                 # dealer bust or player won
-                if value(dealer)>21 or value(hand)>value(dealer):
+                if value(dealer) > 21 or value(hand) > value(dealer):
                     embed = discord.Embed(
                         title=f"Blackjack — {amount}",
                         description="You won!",
                         color=0xEB4634,
                     )
                     embed.add_field(
-                    name="Hand",
-                    value=f"{hand}\nValue: {value(hand)}",
+                        name="Hand",
+                        value=f"{format_hand(hand)}\nValue: {value(hand)}",
                     )
                     embed.add_field(
-                    name="Dealer",
-                    value=f"{dealer}\nValue: {value(dealer)}",
+                        name="Dealer",
+                        value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                     )
                     await self.bot.mongo.update_member(
                         ctx.author, {"$inc": {"balance": amount}}
                     )
                     embed.add_field(
-                        name="Winnings", value=f"You won **{amount*2} tokens.**", inline=False
+                        name="Winnings",
+                        value=f"You won **{amount*2} tokens.**",
+                        inline=False,
                     )
                     return await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
                 # draw
-                elif value(hand)==value(dealer):
+                elif value(hand) == value(dealer):
                     embed = discord.Embed(
                         title=f"Blackjack — {amount}",
                         description="You drew!",
                         color=0xEB4634,
                     )
                     embed.add_field(
-                    name="Hand",
-                    value=f"{hand}\nValue: {value(hand)}",
+                        name="Hand",
+                        value=f"{format_hand(hand)}\nValue: {value(hand)}",
                     )
                     embed.add_field(
-                    name="Dealer",
-                    value=f"{dealer}\nValue: {value(dealer)}",
+                        name="Dealer",
+                        value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                     )
                     embed.add_field(
-                        name="Winnings", value=f"You won **{amount} tokens.**", inline=False
+                        name="Winnings",
+                        value=f"You won **{amount} tokens.**",
+                        inline=False,
                     )
                     return await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
                 # player lost
@@ -510,12 +573,12 @@ class Casino(commands.Cog):
                         color=0xEB4634,
                     )
                     embed.add_field(
-                    name="Hand",
-                    value=f"{hand}\nValue: {value(hand)}",
+                        name="Hand",
+                        value=f"{format_hand(hand)}\nValue: {value(hand)}",
                     )
                     embed.add_field(
-                    name="Dealer",
-                    value=f"{dealer}\nValue: {value(dealer)}",
+                        name="Dealer",
+                        value=f"{format_hand(dealer)}\nValue: {value(dealer)}",
                     )
                     await self.bot.mongo.update_member(
                         ctx.author, {"$inc": {"balance": -1 * amount}}
@@ -527,8 +590,8 @@ class Casino(commands.Cog):
 
         else:
             embed = discord.Embed(
-                title=f"Blackjack",
-                description=f"You play blackjack. You get two cards and can choose to either hit to get another card or stand to end your turn. Aces are 11 or 1, whichever makes your hand better. Jacks, Queens, and Kings are 10.\nThe dealer will also play and if you get a higher total without going over 21 or the dealer busts, you win 2x the amount you enetered with. Do `{ctx.prefix}blackjack start <amount>` to play!",
+                title=f"Blackjack Rules",
+                description=f"You play blackjack. You get two cards and can choose to either HIT to get another card or STAND to end your turn. Aces are 11 or 1, whichever makes improves your hand more, and Jacks, Queens, and Kings are all 10.\n\nThe dealer will also play and if you get a higher total without going over 21 or the dealer busts, you win double the amount you entered with. \n\nRun `{ctx.prefix}blackjack start <amount>` to play!",
                 color=0xEB4634,
             )
             return await ctx.send(embed=embed)
