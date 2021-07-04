@@ -456,7 +456,7 @@ class Casino(commands.Cog):
             while not stay:
                 embed = discord.Embed(
                     title=f"Blackjack — {amount}",
-                    description="React with 👊 to hit and 🛑 to stand.",
+                    description="React with 👊 or send `h` to hit and 🛑 or send `s` to stand.",
                     color=0xEB4634,
                 )
                 embed.add_field(
