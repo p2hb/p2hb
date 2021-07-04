@@ -438,7 +438,11 @@ class Casino(commands.Cog):
                     return await ctx.send(f"> <@!{ctx.author.id}>", embed=embed)
 
             # reaction check
+<<<<<<< HEAD
             def reaction_check(reaction, react_user):
+=======
+            def check(reaction, react_user):
+>>>>>>> 885dc487d85f00bfbae3979713675205096d6117
                 return (
                     react_user.id == ctx.author.id
                     and (str(reaction.emoji) == "🛑" or str(reaction.emoji) == "👊")
