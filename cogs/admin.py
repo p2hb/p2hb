@@ -15,7 +15,7 @@ class Admin(commands.Cog):
     async def is_banker(self, ctx):
         return ctx.guild.get_role(819688054276751381) in ctx.author.roles
 
-    @commands.is_banker()
+    @checks.is_banker()
     @commands.command(aliases=("sp",))
     async def suspend(self, ctx, users: commands.Greedy[FetchUserConverter]):
         await self.bot.mongo.db.member.update_many(
@@ -25,7 +25,7 @@ class Admin(commands.Cog):
         users_msg = ", ".join(f"**{x}**" for x in users)
         await ctx.send(f"Suspended {users_msg}.")
     
-    @commands.is_owner()
+    @checks.is_banker()
     @commands.command(aliases=("usp",))
     async def unsuspend(self, ctx, users: commands.Greedy[FetchUserConverter]):
         await self.bot.mongo.db.member.update_many(
