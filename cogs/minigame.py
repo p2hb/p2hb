@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 import discord
 from discord.ext import commands
 from helpers import checks, helper
-from helpers.puzzle import PuzzleType, Puzzle
+# from helpers.puzzle import PuzzleType, Puzzle
 
 from data import models
 
