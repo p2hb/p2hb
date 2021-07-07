@@ -86,6 +86,15 @@ class Duel(commands.Cog):
                 "message", timeout=30, check=lambda m: check_winner(m)
             )
             winner = message.author
+
+            player1 = await self.bot.mongo.fetch_member_info(ctx.author)
+            player2 = await self.bot.mongo.fetch_member_info(user)
+
+            if player1.balance < amount or player2.balance < amount:
+                return await ctx.send(
+                    "Challenge cancelled. One of you do not have enough tokens to play. "
+                )
+                
             await self.bot.mongo.update_member(
                 ctx.author, {"$inc": {"balance": amount * -1}}
             )
@@ -174,6 +183,15 @@ class Duel(commands.Cog):
                 "message", timeout=30, check=lambda m: check_winner(m)
             )
             winner = message.author
+
+            player1 = await self.bot.mongo.fetch_member_info(ctx.author)
+            player2 = await self.bot.mongo.fetch_member_info(user)
+
+            if player1.balance < amount or player2.balance < amount:
+                return await ctx.send(
+                    "Challenge cancelled. One of you do not have enough tokens to play. "
+                )
+
             await self.bot.mongo.update_member(
                 ctx.author, {"$inc": {"balance": amount * -1}}
             )
