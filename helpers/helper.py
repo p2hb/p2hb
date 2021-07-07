@@ -33,3 +33,8 @@ def hintify(pokemon_name):
         for x in pokemon_name.split()
     )
     return hint
+
+def scramble(word):
+    foo = list(word)
+    random.shuffle(foo)
+    return "".join(foo)
