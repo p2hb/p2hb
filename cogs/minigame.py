@@ -28,7 +28,7 @@ class Minigame(commands.Cog):
 
         amount = random.randint(2, 20)
 
-        puzzle = Puzzle(self.bot, PuzzleType.Scramble)
+        # puzzle = Puzzle(self.bot, PuzzleType.Scramble)
 
         species = self.bot.data.random_spawn()
         embed = discord.Embed(
