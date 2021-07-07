@@ -23,6 +23,9 @@ class Minigame(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def spawn(self, ctx):
+        if ctx.guild.id != 818698098103681085:
+            return await ctx.send("Please use the official P2HB server to use spawns! You can join here: http://join.p2hb.me/")
+            
         amount = random.randint(2, 20)
 
         puzzle = Puzzle(self.bot, PuzzleType.Scramble)
@@ -75,6 +78,9 @@ class Minigame(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     async def hardspawn(self, ctx):
+        if ctx.guild.id != 818698098103681085:
+            return await ctx.send("Please use the official P2HB server to use spawns! You can join here: http://join.p2hb.me/")
+
         amount = random.randint(10, 30)
 
         def scramble(word):
@@ -261,7 +267,7 @@ class Minigame(commands.Cog):
                 return await ctx.send(
                     "Challenge cancelled. One of you do not have enough tokens to play. "
                 )
-                
+
             await self.bot.mongo.update_member(
                 ctx.author, {"$inc": {"balance": amount * -1}}
             )
