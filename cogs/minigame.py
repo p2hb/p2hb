@@ -25,7 +25,7 @@ class Minigame(commands.Cog):
     async def spawn(self, ctx):
         if ctx.guild.id != 818698098103681085:
             return await ctx.send("Please use the official P2HB server to use spawns! You can join here: http://join.p2hb.me/")
-            
+
         amount = random.randint(2, 20)
 
         puzzle = Puzzle(self.bot, PuzzleType.Scramble)
@@ -33,7 +33,7 @@ class Minigame(commands.Cog):
         species = self.bot.data.random_spawn()
         embed = discord.Embed(
             title=f"Unscramble this pokemon for {amount} tokens",
-            description=f"{scramble(species.name)}",
+            description=f"{helper.scramble(species.name)}",
             color=0xEB4634,
         )
         await ctx.send(content=f"> <@!{ctx.author.id}>", embed=embed)
@@ -83,18 +83,13 @@ class Minigame(commands.Cog):
 
         amount = random.randint(10, 30)
 
-        def scramble(word):
-            foo = list(word.lower())
-            random.shuffle(foo)
-            return "".join(foo)
-
         species = self.bot.data.random_spawn()
 
         gamemode = random.randint(1, 2)
         if gamemode == 0:
             embed = discord.Embed(
                 title=f"Unscramble this pokemon for {amount} tokens",
-                description=f"{scramble(species.name)}",
+                description=f"{helper.scramble(species.name)}",
                 color=0xEB4634,
             )
         elif gamemode == 1:
@@ -182,11 +177,6 @@ class Minigame(commands.Cog):
             color=0xEB4634,
         )
 
-        def scramble(word):
-            foo = list(word.lower())
-            random.shuffle(foo)
-            return "".join(foo)
-
         # challenging
         confirm_message = await ctx.send(f"> Challenging <@!{user.id}>...", embed=embed)
         await confirm_message.add_reaction("✅")
@@ -224,7 +214,7 @@ class Minigame(commands.Cog):
         if gamemode == 0:
             embed = discord.Embed(
                 title=f"Unscramble this pokemon for {amount} tokens",
-                description=f"{scramble(species.name)}",
+                description=f"{helper.scramble(species.name)}",
                 color=0xEB4634,
             )
         elif gamemode == 1:
