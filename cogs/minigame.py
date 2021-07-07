@@ -24,7 +24,12 @@ class Minigame(commands.Cog):
     @commands.command()
     async def spawn(self, ctx):
         if ctx.guild.id != 818698098103681085:
-            return await ctx.send("Please use the official P2HB server to use spawns! You can join here: http://join.p2hb.me/")
+            embed = discord.Embed(
+                title=f"Wrong server!",
+                description=f"Please use the official P2HB server for spawns! You can join here: http://join.p2hb.me/",
+                color=0xEB4634,
+            )
+            return await ctx.send(embed = embed)
 
         amount = random.randint(2, 20)
 
@@ -79,7 +84,12 @@ class Minigame(commands.Cog):
     @commands.command()
     async def hardspawn(self, ctx):
         if ctx.guild.id != 818698098103681085:
-            return await ctx.send("Please use the official P2HB server to use spawns! You can join here: http://join.p2hb.me/")
+            embed = discord.Embed(
+                title=f"Wrong server!",
+                description=f"Please use the official P2HB server for spawns! You can join here: http://join.p2hb.me/",
+                color=0xEB4634,
+            )
+            return await ctx.send(embed = embed)
 
         amount = random.randint(10, 30)
 
