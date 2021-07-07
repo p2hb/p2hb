@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import discord
 from discord.ext import commands
 from helpers import checks, helper
+from helpers.puzzle import PuzzleType, Puzzle
 
 from data import models
 
@@ -24,10 +25,7 @@ class Minigame(commands.Cog):
     async def spawn(self, ctx):
         amount = random.randint(2, 20)
 
-        def scramble(word):
-            foo = list(word)
-            random.shuffle(foo)
-            return "".join(foo)
+        puzzle = Puzzle(self.bot, PuzzleType.Scramble)
 
         species = self.bot.data.random_spawn()
         embed = discord.Embed(
@@ -255,6 +253,15 @@ class Minigame(commands.Cog):
                 "message", timeout=30, check=lambda m: check_winner(m)
             )
             winner = message.author
+
+            player1 = await self.bot.mongo.fetch_member_info(ctx.author)
+            player2 = await self.bot.mongo.fetch_member_info(user)
+
+            if player1.balance < amount or player2.balance < amount:
+                return await ctx.send(
+                    "Challenge cancelled. One of you do not have enough tokens to play. "
+                )
+                
             await self.bot.mongo.update_member(
                 ctx.author, {"$inc": {"balance": amount * -1}}
             )
