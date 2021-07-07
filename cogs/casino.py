@@ -60,33 +60,33 @@ class Casino(commands.Cog):
 
         return await ctx.send(embed=embed)
 
-    @checks.has_started()
-    @commands.command(aliases=["gt", "givetokens", "gtokens", "gtoken"])
-    async def givetoken(self, ctx, user: discord.User, amount=0):
-        member = await self.bot.mongo.fetch_member_info(ctx.author)
-        u = await self.bot.mongo.fetch_member_info(user)
+    # @checks.has_started()
+    # @commands.command(aliases=["gt", "givetokens", "gtokens", "gtoken"])
+    # async def givetoken(self, ctx, user: discord.User, amount=0):
+    #     member = await self.bot.mongo.fetch_member_info(ctx.author)
+    #     u = await self.bot.mongo.fetch_member_info(user)
 
-        if u is None:
-            return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
-        elif u.suspended:
-            return await ctx.send(f"**{user.name}** is suspended")
+    #     if u is None:
+    #         return await ctx.send(f"**{user.name}** needs to run `{ctx.prefix}start`")
+    #     elif u.suspended:
+    #         return await ctx.send(f"**{user.name}** is suspended")
 
-        if amount < 0:
-            return await ctx.send("Nice Try")
+    #     if amount < 0:
+    #         return await ctx.send("Nice Try")
 
-        if member.balance - amount < 0:
-            return await ctx.send("You don't have enough money")
+    #     if member.balance - amount < 0:
+    #         return await ctx.send("You don't have enough money")
 
-        await self.bot.mongo.update_member(
-            ctx.author, {"$inc": {"balance": -1 * amount}}
-        )
-        await self.bot.mongo.update_member(user, {"$inc": {"balance": amount}})
+    #     await self.bot.mongo.update_member(
+    #         ctx.author, {"$inc": {"balance": -1 * amount}}
+    #     )
+    #     await self.bot.mongo.update_member(user, {"$inc": {"balance": amount}})
 
-        embed = discord.Embed(color=0xEB4634)
-        embed.title = f"Transaction Complete!"
-        embed.description = f"**{ctx.author.display_name}** gave **{user.display_name}** **{amount}** tokens!"
+    #     embed = discord.Embed(color=0xEB4634)
+    #     embed.title = f"Transaction Complete!"
+    #     embed.description = f"**{ctx.author.display_name}** gave **{user.display_name}** **{amount}** tokens!"
 
-        return await ctx.send(f"> <@!{user.id}>", embed=embed)
+    #     return await ctx.send(f"> <@!{user.id}>", embed=embed)
 
     @checks.is_banker()
     @commands.command(aliases=["bbal"])
