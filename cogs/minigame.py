@@ -26,7 +26,7 @@ class Minigame(commands.Cog):
         if ctx.guild.id != 818698098103681085 and is_practice != "practice":
             embed = discord.Embed(
                 title=f"Wrong server!",
-                description=f"Please use the official P2HB server for spawns! You can join here: http://join.p2hb.me/",
+                description=f"Please use the official P2HB server for spawns! If you would like to play without the awards outside the server, you can run `{ctx.prefix}spawn practice`. \n\nServer Link: http://join.p2hb.me/",
                 color=0xEB4634,
             )
             return await ctx.send(embed = embed)
@@ -89,7 +89,7 @@ class Minigame(commands.Cog):
         if ctx.guild.id != 818698098103681085 and is_practice != "practice":
             embed = discord.Embed(
                 title=f"Wrong server!",
-                description=f"Please use the official P2HB server for spawns! You can join here: http://join.p2hb.me/",
+                description=f"Please use the official P2HB server for spawns! If you would like to play without the awards outside the server, you can run `{ctx.prefix}spawn practice`. \n\nServer Link: http://join.p2hb.me/",
                 color=0xEB4634,
             )
             return await ctx.send(embed = embed)
