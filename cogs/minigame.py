@@ -22,8 +22,8 @@ class Minigame(commands.Cog):
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def spawn(self, ctx):
-        if ctx.guild.id != 818698098103681085:
+    async def spawn(self, ctx, is_practice = "n"):
+        if ctx.guild.id != 818698098103681085 and is_practice != "practice":
             embed = discord.Embed(
                 title=f"Wrong server!",
                 description=f"Please use the official P2HB server for spawns! You can join here: http://join.p2hb.me/",
@@ -31,7 +31,10 @@ class Minigame(commands.Cog):
             )
             return await ctx.send(embed = embed)
 
-        amount = random.randint(2, 20)
+        if is_practice == "practice":
+            amount = 0
+        else:
+            amount = random.randint(10, 30)
 
         # puzzle = Puzzle(self.bot, PuzzleType.Scramble)
 
@@ -82,8 +85,8 @@ class Minigame(commands.Cog):
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def hardspawn(self, ctx):
-        if ctx.guild.id != 818698098103681085:
+    async def hardspawn(self, ctx, is_practice = "n"):
+        if ctx.guild.id != 818698098103681085 and is_practice != "practice":
             embed = discord.Embed(
                 title=f"Wrong server!",
                 description=f"Please use the official P2HB server for spawns! You can join here: http://join.p2hb.me/",
@@ -91,7 +94,10 @@ class Minigame(commands.Cog):
             )
             return await ctx.send(embed = embed)
 
-        amount = random.randint(10, 30)
+        if is_practice == "practice":
+            amount = 0
+        else:
+            amount = random.randint(10, 30)
 
         species = self.bot.data.random_spawn()
 
