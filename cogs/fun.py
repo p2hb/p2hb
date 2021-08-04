@@ -87,7 +87,7 @@ class Fun(commands.Cog):
         if random.randint(1,100)>80:
             await ctx.send(f"Smooch! You are married!! Soulmate?")
         else:
-            await ctx.send(f"You try to propose, but **{user}** throws **divorce papers** at you!")
+            await ctx.send(f"You and **{user}** are now married!")
     
     @commands.command()
     async def divorce(self, ctx, user: discord.User):
