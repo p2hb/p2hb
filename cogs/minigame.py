@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import discord
 from discord.ext import commands
 from helpers import checks, helper
+
 # from helpers.puzzle import PuzzleType, Puzzle
 
 from data import models
@@ -22,14 +23,14 @@ class Minigame(commands.Cog):
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def spawn(self, ctx, is_practice = "n"):
+    async def spawn(self, ctx, is_practice="n"):
         if ctx.guild.id != 818698098103681085 and is_practice != "practice":
             embed = discord.Embed(
                 title=f"Wrong server!",
                 description=f"Please use the official P2HB server for spawns! If you would like to play without the awards outside the server, you can run `{ctx.prefix}spawn practice`. \n\nServer Link: http://join.p2hb.me/",
                 color=0xEB4634,
             )
-            return await ctx.send(embed = embed)
+            return await ctx.send(embed=embed)
 
         if is_practice == "practice":
             amount = 0
@@ -85,14 +86,14 @@ class Minigame(commands.Cog):
     @commands.max_concurrency(1, commands.BucketType.user)
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def hardspawn(self, ctx, is_practice = "n"):
+    async def hardspawn(self, ctx, is_practice="n"):
         if ctx.guild.id != 818698098103681085 and is_practice != "practice":
             embed = discord.Embed(
                 title=f"Wrong server!",
                 description=f"Please use the official P2HB server for spawns! If you would like to play without the awards outside the server, you can run `{ctx.prefix}spawn practice`. \n\nServer Link: http://join.p2hb.me/",
                 color=0xEB4634,
             )
-            return await ctx.send(embed = embed)
+            return await ctx.send(embed=embed)
 
         if is_practice == "practice":
             amount = 0
