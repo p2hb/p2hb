@@ -194,8 +194,9 @@ class Collectors(commands.Cog):
 
         await self.bot.mongo.db.collector.delete_one({"_id": ctx.author.id})
         await ctx.send("Cleared your collecting list.")
-    
+
     @checks.is_banker()
+    @collect.command()
     async def forceclear(self, ctx, member: discord.Member):
         """Forceclear someones collecting list."""
 
