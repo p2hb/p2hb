@@ -3,6 +3,8 @@ from discord.ext import commands, menus
 from helpers.converters import FetchUserConverter, SpeciesConverter
 from helpers.pagination import AsyncListPageSource
 
+from helpers import checks
+
 
 class Collectors(commands.Cog):
     """For collectors."""
@@ -191,6 +193,13 @@ class Collectors(commands.Cog):
         """Clear your collecting list."""
 
         await self.bot.mongo.db.collector.delete_one({"_id": ctx.author.id})
+        await ctx.send("Cleared your collecting list.")
+    
+    @checks.is_banker()
+    async def clear(self, ctx, member: discord.Member):
+        """Clear your collecting list."""
+
+        await self.bot.mongo.db.collector.delete_one({"_id": member.id})
         await ctx.send("Cleared your collecting list.")
 
     @collect.command()
