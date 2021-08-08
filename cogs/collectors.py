@@ -196,11 +196,11 @@ class Collectors(commands.Cog):
         await ctx.send("Cleared your collecting list.")
     
     @checks.is_banker()
-    async def clear(self, ctx, member: discord.Member):
-        """Clear your collecting list."""
+    async def forceclear(self, ctx, member: discord.Member):
+        """Forceclear someones collecting list."""
 
         await self.bot.mongo.db.collector.delete_one({"_id": member.id})
-        await ctx.send("Cleared your collecting list.")
+        await ctx.send(f"Cleared **{member}**'s collecting list.")
 
     @collect.command()
     async def globalsearch(self, ctx, *, species: SpeciesConverter):
