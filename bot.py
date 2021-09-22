@@ -26,7 +26,6 @@ COGS = [
     "duel",
     "event",
     "configuration",
-    "tournament"
 ]
 
 async def _prefix_callable(bot, msg):
