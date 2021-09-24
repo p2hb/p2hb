@@ -49,14 +49,14 @@ class Shinyhunt(commands.Cog):
             )
             return await ctx.send(f"Added {species} to your shiny hunt! You can run `{ctx.prefix}shinyping <pokemon>` to ping shiny hunters and `{ctx.prefix}collect enable` to enable pings.")
 
-        if user['shinyhunt'] == species.id:
+        if user.get('shinyhunt', None) == species.id:
             return await ctx.send(f"You are already shiny hunting **{species}**!")
         else:
-            if user['shinyhunt'] == None:
+            if user.get('shinyhunt', None) == None:
                 await ctx.send(f"Added **{species}** to your shinyhunt! Run `{ctx.prefix}clearhunt` to clear your shiny hunt!")
             else:
                 await ctx.send(
-                    f"Updated your shiny hunt to {species} from {ctx.bot.data.species_by_number(user['shinyhunt'])}. Run `{ctx.prefix}clearhunt` to clear your shiny hunt!"
+                    f"Updated your shiny hunt to {species} from {ctx.bot.data.species_by_number(user.get('shinyhunt', None))}. Run `{ctx.prefix}clearhunt` to clear your shiny hunt!"
                 )
             await self.bot.mongo.db.collector.update_one(
                 {"_id": ctx.author.id},
@@ -70,11 +70,11 @@ class Shinyhunt(commands.Cog):
 
         user = await self.bot.mongo.db.collector.find_one({"_id": ctx.author.id})
 
-        if user == None or user['shinyhunt'] == None:
+        if user == None or user.get('shinyhunt', None) == None:
             await ctx.send(f"You are not shiny hunting any pokemon. You can update your shiny hunt with `{ctx.prefix}shinyhunt`.")
         else:
             await ctx.send(
-                f"You are shiny hunting {ctx.bot.data.species_by_number(user['shinyhunt'])}"
+                f"You are shiny hunting {ctx.bot.data.species_by_number(user.get('shinyhunt', None))}"
             )
     
     @commands.command()
