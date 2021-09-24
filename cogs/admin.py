@@ -16,7 +16,7 @@ class Admin(commands.Cog):
         return ctx.guild.get_role(819688054276751381) in ctx.author.roles
 
     @checks.is_banker()
-    @commands.command(aliases=("sp",))
+    @commands.command(aliases=("susp",))
     async def suspend(self, ctx, users: commands.Greedy[FetchUserConverter]):
         await self.bot.mongo.db.member.update_many(
             {"_id": {"$in": [x.id for x in users]}},
