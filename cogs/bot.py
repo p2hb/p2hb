@@ -71,7 +71,7 @@ class Bot(commands.Cog):
         seconds = (message.created_at - ctx.message.created_at).total_seconds()
         await message.edit(content=f"Pong! **{seconds * 1000:.0f} ms**")
     
-    @tasks.loop(minutes=20)
+    @tasks.loop(minutes=1)
     async def update_status(self):
         await self.bot.wait_until_ready()
 
@@ -82,7 +82,7 @@ class Bot(commands.Cog):
             )
         )
     
-    @tasks.loop(minutes=30)
+    @tasks.loop(minutes=1)
     async def update_dbl_stats(self):
         """This function runs every 30 minutes to automatically update your server count."""
         await self.bot.wait_until_ready()
