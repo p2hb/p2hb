@@ -104,19 +104,6 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
-name = "dblpy"
-version = "0.4.0"
-description = "A simple API wrapper for top.gg written in Python."
-category = "main"
-optional = false
-python-versions = ">= 3.5.3"
-
-[package.dependencies]
-aiohttp = "*"
-"discord.py" = "*"
-ratelimiter = "*"
-
-[[package]]
 name = "discord-ext-events"
 version = "0.1.0a0"
 description = "Custom events derived from events dispatched by Discord."
@@ -311,17 +298,6 @@ tls = ["ipaddress"]
 zstd = ["zstandard"]
 
 [[package]]
-name = "ratelimiter"
-version = "1.2.0.post0"
-description = "Simple python rate limiting object"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-test = ["pytest (>=3.0)", "pytest-asyncio"]
-
-[[package]]
 name = "regex"
 version = "2020.11.13"
 description = "Alternative regular expression module, to replace re."
@@ -344,6 +320,17 @@ description = "Python Library for Tom's Obvious, Minimal Language"
 category = "dev"
 optional = false
 python-versions = "*"
+
+[[package]]
+name = "topggpy"
+version = "1.3.0"
+description = "A simple API wrapper for Top.gg written in Python."
+category = "main"
+optional = false
+python-versions = ">= 3.6"
+
+[package.dependencies]
+"discord.py" = "*"
 
 [[package]]
 name = "typed-ast"
@@ -393,7 +380,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "08d9e1a634ce48fb60fef5fe182f9d259091f0b4cb6aa5a4b76818e1e8cb0e1e"
+content-hash = "a546067128192c98812b1d6ccbd843a6a191d647d15119abf601a1e7b2568cee"
 
 [metadata.files]
 aiohttp = [
@@ -441,10 +428,6 @@ chardet = [
 click = [
     {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
     {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
-]
-dblpy = [
-    {file = "dblpy-0.4.0-py3-none-any.whl", hash = "sha256:2d7d746ee7e7b3a2597f485ebf4089e7baabdcf1717743228991bd988c69e1b5"},
-    {file = "dblpy-0.4.0.tar.gz", hash = "sha256:744f5ee9493a945e5907466754b2dce4735715b34daabb9e6264f76ec79818c9"},
 ]
 discord-ext-events = []
 discord-ext-menus = []
@@ -571,10 +554,6 @@ pymongo = [
     {file = "pymongo-3.11.0-py2.7-macosx-10.15-x86_64.egg", hash = "sha256:63a5387e496a98170ffe638b435c0832c0f2011a6f4ff7a2880f17669fff8c03"},
     {file = "pymongo-3.11.0.tar.gz", hash = "sha256:076a7f2f7c251635cf6116ac8e45eefac77758ee5a77ab7bd2f63999e957613b"},
 ]
-ratelimiter = [
-    {file = "ratelimiter-1.2.0.post0-py3-none-any.whl", hash = "sha256:a52be07bc0bb0b3674b4b304550f10c769bbb00fead3072e035904474259809f"},
-    {file = "ratelimiter-1.2.0.post0.tar.gz", hash = "sha256:5c395dcabdbbde2e5178ef3f89b568a3066454a6ddc223b76473dac22f89b4f7"},
-]
 regex = [
     {file = "regex-2020.11.13-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:8b882a78c320478b12ff024e81dc7d43c1462aa4a3341c754ee65d857a521f85"},
     {file = "regex-2020.11.13-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:a63f1a07932c9686d2d416fb295ec2c01ab246e89b4d58e5fa468089cab44b70"},
@@ -625,6 +604,10 @@ six = [
 toml = [
     {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
     {file = "toml-0.10.1.tar.gz", hash = "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f"},
+]
+topggpy = [
+    {file = "topggpy-1.3.0-py3-none-any.whl", hash = "sha256:1e57bbdadae5d7cd79cc3e1e684deace5e74e70a5abceecf9001807de6e62e85"},
+    {file = "topggpy-1.3.0.tar.gz", hash = "sha256:84d871b098117ca806b8b5817e6f587656d69b19268b3e8dbcf723f28069bb50"},
 ]
 typed-ast = [
     {file = "typed_ast-1.4.1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:73d785a950fc82dd2a25897d525d003f6378d1cb23ab305578394694202a58c3"},
