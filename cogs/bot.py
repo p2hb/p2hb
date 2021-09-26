@@ -3,7 +3,7 @@ import traceback
 
 import discord
 from discord.ext import commands, tasks
-import dbl
+import topgg
 
 import config
 
@@ -14,7 +14,7 @@ class Bot(commands.Cog):
         self.bot = bot
         self.update_status.start()
 
-        self.dblpy = dbl.DBLClient(self.bot, config.DBL_TOKEN)
+        self.topggpy = topgg.DBLClient(self.bot, config.DBL_TOKEN)
         self.update_dbl_stats.start()
 
     @commands.Cog.listener()
@@ -89,7 +89,7 @@ class Bot(commands.Cog):
 
         try:
             server_count = len(self.bot.guilds)
-            await self.dblpy.post_guild_count(server_count)
+            await self.topggpy.post_guild_count(server_count)
         except Exception as e:
             pass
 
