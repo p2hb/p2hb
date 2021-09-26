@@ -82,7 +82,7 @@ class Bot(commands.Cog):
             )
         )
     
-    @tasks.loop(minutes=1)
+    @tasks.loop(minutes=30)
     async def update_dbl_stats(self):
         """This function runs every 30 minutes to automatically update your server count."""
         await self.bot.wait_until_ready()
