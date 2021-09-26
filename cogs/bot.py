@@ -86,12 +86,9 @@ class Bot(commands.Cog):
     async def update_dbl_stats(self):
         """This function runs every 30 minutes to automatically update your server count."""
         await self.bot.wait_until_ready()
-
-        try:
-            server_count = len(self.bot.guilds)
-            await self.dblpy.post_guild_count(server_count)
-        except Exception as e:
-            pass
+        
+        server_count = len(self.bot.guilds)
+        await self.dblpy.post_guild_count(server_count)
 
 
 def setup(bot):
