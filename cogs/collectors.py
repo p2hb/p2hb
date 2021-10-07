@@ -14,7 +14,7 @@ class Collectors(commands.Cog):
 
     async def doc_to_species(self, doc):
         for x in doc.keys():
-            if x != "_id":
+            if x != "_id" and x.isnumeric():
                 if self.bot.data.species_by_number(int(x)):
                     yield self.bot.data.species_by_number(int(x))
 
