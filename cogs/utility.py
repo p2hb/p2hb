@@ -22,7 +22,7 @@ class Utility(commands.Cog):
         )
         embed.add_field(
             name = "With shiny charm", 
-            value = f"1 in {3276.8/(1+math.log(1+streak/30)): .3f}",
+            value = f"1 in {3413.33/(1+math.log(1+streak/30)): .3f}",
             inline = False
         )
         await ctx.send(embed = embed)
