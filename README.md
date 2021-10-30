@@ -3,7 +3,7 @@
 [![Discord Bots](https://top.gg/api/widget/818706022675120138.svg)](https://top.gg/bot/818706022675120138)
 
 ## Usage
-Feel free to host your own instance of the bot, however, you will be missing out on the thousands of tags with useful information compiled users, and you will not be able to use the economy on the P2HB Offical Server.
+Feel free to host your own instance of the bot, however, you will be missing out on the thousands of tags with useful information compiled by users, and you will not be able to use the economy on the P2HB Offical Server.
 
 ## Running
 While I would prefer if you just [added the main instance of the bot](https://discord.com/oauth2/authorize?client_id=818706022675120138&permissions=8&scope=bot) to your server, here is the setup process to run your own instance.
