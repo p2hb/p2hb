@@ -57,12 +57,6 @@ class Paginator:
         if self.num_pages <= 1:
             return
 
-        await message.add_reaction("⏮️")
-        await message.add_reaction("◀")
-        await message.add_reaction("▶")
-        await message.add_reaction("⏭️")
-        await message.add_reaction("⏹")
-
         try:
             while True:
                 reaction, user = await ctx.bot.wait_for(

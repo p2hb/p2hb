@@ -17,7 +17,6 @@ COGS = [
     "duel",
     "event",
     "fun",
-    "help",
     "info",
     "minigame",
     "mongo",
