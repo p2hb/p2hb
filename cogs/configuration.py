@@ -77,6 +77,7 @@ class Configuration(commands.Cog):
             return await ctx.send("Prefix must not be longer than 20 characters.")
 
         await self.bot.mongo.update_guild(ctx.guild, {"$set": {"prefix": prefix}})
+
         await ctx.send(f"Changed prefix to `{prefix}` for this server.")
 
     @checks.is_admin()

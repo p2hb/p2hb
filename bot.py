@@ -5,6 +5,8 @@ import discord
 from discord.ext import commands, events
 from discord.ext.events import member_kick
 
+from pymemcache.client import base
+
 import config
 
 COGS = [
@@ -13,6 +15,7 @@ COGS = [
     "collectors",
     "configuration",
     "casino",
+    "cache",
     "data",
     "duel",
     "event",
@@ -34,8 +37,12 @@ async def _prefix_callable(bot, msg):
     if msg.guild is None:
         base.append(config.DEFAULT_PREFIX)
     else:
-        guild = await bot.mongo.fetch_guild(msg.guild)
-        base.append(guild.prefix)
+        prefix = bot.prefixes.get(msg.guild.id)
+        if prefix is None:
+            guild = await bot.mongo.fetch_guild(msg.guild)
+            bot.prefixes[msg.guild.id] = guild.prefix
+        base.append(prefix)
+
     return base
 
 class Bot(commands.AutoShardedBot, events.EventsMixin):
@@ -48,6 +55,7 @@ class Bot(commands.AutoShardedBot, events.EventsMixin):
         )
 
         self.config = config
+        self.prefixes = {}
 
         self.load_extension("jishaku")
         for i in COGS:
@@ -64,6 +72,10 @@ class Bot(commands.AutoShardedBot, events.EventsMixin):
     @property
     def data(self):
         return self.get_cog("Data").instance
+
+    @property
+    def cache(self):
+        return self.get_cog("Cache")
 
     async def on_ready(self):
         self.log.info(f"Ready called.")
