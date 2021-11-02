@@ -204,24 +204,6 @@ class Collectors(commands.Cog):
         await ctx.send(f"Cleared **{member}**'s collecting list.")
 
     @collect.command()
-    async def globalsearch(self, ctx, *, species: SpeciesConverter):
-        """Lists the collectors of a pokémon or region."""
-
-        users = self.bot.mongo.db.collector.find({str(species.id): True})
-        pages = menus.MenuPages(
-            source=AsyncListPageSource(
-                users,
-                title=f"All {species} Collectors using the bot",
-                format_item=lambda x: f"<@{x['_id']}>",
-            )
-        )
-
-        try:
-            await pages.start(ctx)
-        except IndexError:
-            await ctx.send("No users found.")
-
-    @collect.command()
     async def search(self, ctx, *, species: SpeciesConverter):
         """Lists the collectors of a pokémon or region in the server."""
 
@@ -246,12 +228,6 @@ class Collectors(commands.Cog):
         """An alias for the collect search command."""
 
         await ctx.invoke(self.search, species=species)
-
-    @commands.command(aliases=["colgs", "cgs"])
-    async def collectglobalsearch(self, ctx, *, species: SpeciesConverter):
-        """An alias for the collect serversearch command."""
-
-        await ctx.invoke(self.globalsearch, species=species)
 
 
 def setup(bot):
