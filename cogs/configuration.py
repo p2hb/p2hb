@@ -70,6 +70,7 @@ class Configuration(commands.Cog):
 
         if prefix in ("reset", config.DEFAULT_PREFIX):
             await self.bot.mongo.update_guild(ctx.guild, {"$unset": {"prefix": 1}})
+            self.bot.prefixes[ctx.guild.id] = None
 
             return await ctx.send(f"Reset prefix to `{config.DEFAULT_PREFIX}` for this server.")
 
@@ -77,6 +78,7 @@ class Configuration(commands.Cog):
             return await ctx.send("Prefix must not be longer than 20 characters.")
 
         await self.bot.mongo.update_guild(ctx.guild, {"$set": {"prefix": prefix}})
+        self.bot.prefixes[ctx.guild.id] = prefix
 
         await ctx.send(f"Changed prefix to `{prefix}` for this server.")
 

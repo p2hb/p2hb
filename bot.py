@@ -38,6 +38,8 @@ async def _prefix_callable(bot, msg):
         if prefix is None:
             guild = await bot.mongo.fetch_guild(msg.guild)
             bot.prefixes[msg.guild.id] = guild.prefix
+            prefix = bot.prefixes.get(msg.guild.id)
+
         base.append(prefix)
 
     return base
