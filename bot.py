@@ -15,7 +15,6 @@ COGS = [
     "collectors",
     "configuration",
     "casino",
-    "cache",
     "data",
     "duel",
     "event",
@@ -73,9 +72,9 @@ class Bot(commands.AutoShardedBot, events.EventsMixin):
     def data(self):
         return self.get_cog("Data").instance
 
-    @property
-    def cache(self):
-        return self.get_cog("Cache")
+    # @property
+    # def cache(self):
+    #     return self.get_cog("Cache")
 
     async def on_ready(self):
         self.log.info(f"Ready called.")
