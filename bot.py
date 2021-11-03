@@ -5,8 +5,6 @@ import discord
 from discord.ext import commands, events
 from discord.ext.events import member_kick
 
-from pymemcache.client import base
-
 import config
 
 COGS = [
