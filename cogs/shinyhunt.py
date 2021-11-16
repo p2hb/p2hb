@@ -8,7 +8,8 @@ class Shinyhunt(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-
+        
+    @commands.cooldown(1, 5, commands.BucketType.guild)
     @commands.command(aliases=("sp",))
     async def shinyping(self, ctx, species: SpeciesConverter):
         """Ping shiny hunters of a pokemon"""
