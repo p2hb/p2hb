@@ -36,7 +36,7 @@ class Shinyhunt(commands.Cog):
                 f"No one is shiny hunting {species}! \n \n**Tip:** You can run `{ctx.prefix}collect enable` or `{ctx.prefix}collect disable` to disable or enable collect and shinyhunt pings on a server! By default, this option will be off."
             )
 
-    @commands.command()
+    @commands.command(aliases=("sh",))
     async def shinyhunt(self, ctx, species: SpeciesConverter):
         """Add pokémon to shiny hunt"""
 
